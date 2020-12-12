@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<!-- Required meta tags -->
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+	<!-- Bootstrap CSS -->
+	<link rel="stylesheet" href="{{url_for('static', filename='css/bootstrap.css')}}" />
+	<!-- Font Awesome -->
+	<link rel="stylesheet" href="{{url_for('static', filename='css/all.min.css')}}" />
+	<!-- External CSS -->
+	<link rel="stylesheet" href="{{url_for('static', filename='css/style.css')}}" />
+	<!-- Title -->
+	<title>{{ title }} | Cick's Blog</title>
+</head>
+
+<body>
+	<!-- header -->
+	<header class="site-header">
+		<nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+			<div class="container">
+				<a class="navbar-brand mr-4" href="{{ url_for('home') }}">
+					<i class="fas fa-dove"></i>
+					Cick's blog
+				</a>
+				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle"
+					aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+				<div class="collapse navbar-collapse" id="navbarToggle">
+					<div class="navbar-nav mr-auto">
+						<a class="nav-item nav-link" href="{{ url_for('home') }}">Home</a>
+						<a class="nav-item nav-link" href="{{ url_for('about') }}">
+							About
+						</a>
+					</div>
+					<!-- Navbar Right Side -->
+					<div class="navbar-nav">
+						{% if not current_user.is_authenticated %}
+						<a class="nav-item nav-link" href="{{ url_for('registration') }}">
+							<i class="fas fa-user-plus mr-1"></i>
+							Registration
+						</a>
+						<a class="nav-item nav-link" href="{{ url_for('login') }}">
+							<i class="fas fa-sign-in-alt mr-1"></i>
+							Login
+						</a>
+						{% else %}
+						<a class="nav-item nav-link" href="{{ url_for('create_post') }}">
+							<i class="fas fa-plus-circle mr-1"></i>
+							New Post
+						</a>
+						<a class="nav-item nav-link" href="{{ url_for('account') }}">
+							<i class="fas fa-user-astronaut mr-1"></i>
+							Account
+						</a>
+						<a class="nav-item nav-link" href="{{ url_for('logout') }}">
+							<i class="fas fa-sign-out-alt mr-1"></i>
+							Logout
+						</a>
+						{% endif %}
+					</div>
+				</div>
+			</div>
+		</nav>
+	</header>
+	
+	<!-- main -->
+	<main role="main" class="container">
+		<div class="row">
+			<!-- main content section -->
+			<div class="col-md-8">
+				{% with messages = get_flashed_messages(with_categories=True) %}
+				{% if messages %}
+				{% for category, message in messages %}
+				<div class="flash-data" data-flash="{{ message }}" data-category="{{ category }}"></div>
+				{% endfor %}
+				{% endif %}
+				{% endwith %}
+				{% block content %} {% endblock content %}
+			</div>
+			<!-- side content section-->
+			<div class="col-md-4">
+				<div class="content-section p-4">
+					<h3 class="text-center">
+						<i class="far fa-heart"></i>
+						Stories
+					</h3>
+					<div class="stories mb-4 text-center">
+						<p class="mb-0">
+							“What lies behind us and what lies before us are
+							tiny matters compared to what lies within us.”
+						</p>
+						<small>- Ralph Waldo Emerson</small>
+					</div>
+					<ul class="list-group">
+						<li class="list-group-item list-group-item-light">
+							Latest Posts
+						</li>
+						<li class="list-group-item list-group-item-light">
+							Announcements
+						</li>
+						<li class="list-group-item list-group-item-light">
+							Calendars
+						</li>
+						<li class="list-group-item list-group-item-light">
+							Etc.
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</main>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+	integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous">
+	</script>
+<script src="{{url_for('static', filename='js/jquery-3.5.1.js')}}"></script>
+<script src="{{url_for('static', filename='js/bootstrap.js')}}"></script>
+<script src="{{url_for('static', filename='js/sweetalert2.all.min.js')}}"></script>
+<script src="{{url_for('static', filename='js/script.js')}}"></script>
+
+</html>

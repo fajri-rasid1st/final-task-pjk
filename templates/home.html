@@ -1,0 +1,55 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+
+<!-- content -->
+<h1 class="display-4 mb-2">Apps Siswa</h1>
+{% for post in posts.items %}
+<article class="media content-section">
+	{% if post.author.id == current_user.id %}
+	<a href="{{ url_for('account') }}" title="click to see your profile">
+		<img class="rounded-circle article-img" src="{{url_for('static', filename='img/' + post.author.user_pict)}}">
+	</a>
+	{% else %}
+	<a href="{{ url_for('account_info', username=post.author.username) }}" title="click to see this profile">
+		<img class="rounded-circle article-img" src="{{url_for('static', filename='img/' + post.author.user_pict)}}">
+	</a>
+	{% endif %}
+	<div class="media-body">
+		<div class="article-metadata mb-2">
+			<a class="mr-2" href="{{ url_for('user_posts', username=post.author.username) }}">
+				{{ post.author.username }}
+			</a>
+			<small class="text-muted">{{ post.date_posted.strftime('%A, %d %b %Y.') }}</small>
+		</div>
+		<h3><a class="article-title" href="{{ url_for('current_post', post_id=post.id) }}">{{ post.title }}</a></h3>
+		<p class="article-content">{{ post.content }}</p>
+	</div>
+</article>
+{% endfor %}
+
+<!-- pagination -->
+<nav class="mt-2 mb-4" aria-label="Page navigation example">
+	<ul class="pagination pagination-lg justify-content-center">
+		{% for page_num in posts.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+		{% if page_num %}
+		{% if page_num == posts.page %}
+		<li class="page-item active" aria-current="page">
+			<a class="page-link" href="{{ url_for('home', page=page_num) }}">
+				{{ page_num }}
+				<span class="sr-only">(current)</span>
+			</a>
+		</li>
+		{% else %}
+		<li class="page-item">
+			<a class="page-link" href="{{ url_for('home', page=page_num) }}">
+				{{ page_num }}
+			</a>
+		</li>
+		{% endif %}
+		{% endif %}
+		{% endfor %}
+	</ul>
+</nav>
+
+{% endblock content %}
