@@ -13,7 +13,6 @@ db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 admin = Admin(app)
 
-
 class Siswa(db.Model):
     id = db.Column(db.Integer, primary_key=True, nullable=False)
     nis = db.Column(db.String(10), unique=True, nullable=False)
@@ -21,6 +20,7 @@ class Siswa(db.Model):
     tempat_lahir = db.Column(db.String(30), nullable=False)
     tanggal_lahir = db.Column(db.Date, nullable=False)
     alamat = db.Column(db.String(100), nullable=False)
+    email = db.Column(db.String(255), nullable=False)
 
     def __repr__(self):
         return f"Siswa('{self.nama}', '{self.nis}')"
@@ -45,7 +45,10 @@ class Nilai(db.Model):
     id_siswa = db.Column(db.Integer, db.ForeignKey("siswa.id"), nullable=False)
     id_pelajar = db.Column(db.Integer, db.ForeignKey("pelajaran.id"), nullable=False)
     semester = db.Column(db.Integer, nullable=False)
-    nilai = db.Column(db.Float(5, 2), nullable=False)
+    nilai = db.Column(db.Numeric(5, 2), nullable=False)
+
+    siswa = db.relationship('Siswa', backref=db.backref('data_siswa'))
+    pelajaran = db.relationship('Pelajaran', backref=db.backref('data_pelajaran'))
 
     def __repr__(self):
         return f"Nilai('{self.id_siswa}', '{self.id_pelajar}', '{self.semester}', '{self.nilai}')"
@@ -56,10 +59,12 @@ class Nilai(db.Model):
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True, nullable=False)
-    user_name = db.Column(db.String(50), unique=True, nullable=False)
+    user_name = db.Column(db.String(50), db.ForeignKey('siswa.email'), unique=True, nullable=False)
     passsword = db.Column(db.String(128), nullable=False)
     hak_akses = db.Column(db.String(10), nullable=False)
 
+    email = db.relationship('Siswa', backref=db.backref('user_email'), uselist=False)
+    
     def __repr__(self):
         return f"User('{self.user_name}','{self.passsword}','{self.hak_akses}')"
 
