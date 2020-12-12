@@ -42,22 +42,16 @@ body {
 	z-index: 2;
 }
 
-.form-signin input[type="text"] {
+.form-signin input[type="text"],
+.form-signin input[type="password"] {
 	margin-bottom: -1px;
-	border-bottom-right-radius: 0;
-	border-bottom-left-radius: 0;
 	border: 2px solid #bbbbbb;
-	border-bottom: 1px solid #bbbbbb;
 	box-shadow: none;
+	font-weight: 500;
 }
 
 .form-signin input[type="password"] {
 	margin-bottom: 10px;
-	border-top-left-radius: 0;
-	border-top-right-radius: 0;
-	border: 2px solid #bbbbbb;
-	border-top: 1px solid #bbbbbb;
-	box-shadow: none;
 }
 
 .bd-placeholder-img {
@@ -77,4 +71,13 @@ body {
 .btn-outline-info {
 	color: #17a2b8;
 	border: 2px solid #17a2b8;
+	font-weight: 500;
+}
+
+.form-control-label {
+	font-weight: 500;
+}
+
+.form-signin .is-invalid {
+	border: 2px solid #dc3545 !important;
 }

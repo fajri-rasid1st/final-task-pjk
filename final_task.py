@@ -1,8 +1,9 @@
-from flask import Flask, render_template, url_for
+from flask import Flask, render_template, url_for, flash, redirect
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
 from flask_admin.contrib.sqla import ModelView
 from flask_admin import Admin, BaseView, expose, AdminIndexView
+from forms import LoginForm
 
 app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = "mysql+pymysql://root:@localhost/final_task"
@@ -90,9 +91,18 @@ def about():
     return render_template("about.html", title="About")
 
 
-@app.route("/login")
+@app.route("/login", methods=["GET", "POST"])
 def login():
-    return render_template("login.html", title="Login")
+    login_form = LoginForm()
+
+    if login_form.validate_on_submit():
+        if login_form.username.data == "admin" and login_form.password.data == "admin":
+            flash("Selamat Datang Di Sikolah.", "success")
+            return redirect(url_for("home"))
+        else:
+            flash("Invalid username or password!", "error")
+
+    return render_template("login.html", title="Login", form=login_form)
 
 
 if __name__ == "__main__":
