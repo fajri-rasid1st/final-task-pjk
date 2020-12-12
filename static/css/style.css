@@ -63,15 +63,10 @@ a.article-title:hover {
 	text-decoration: none;
 }
 
-.article-content {
-	white-space: pre-line;
-}
-
-.article-img {
-	height: 70px;
-	width: 70px;
-	border: 2px solid #bbbbbb;
-	margin-right: 14px;
+.profile-img {
+	height: 40px;
+	width: 40px;
+	border-radius: 50%;
 }
 
 .article-metadata {
@@ -127,4 +122,17 @@ a.article-title:hover {
 
 .textarea-error {
 	border: 2px solid #dc3545 !important;
+}
+
+.info {
+	cursor: pointer;
+}
+
+.dev {
+	color: #343a40;
+	font-weight: 500;
+}
+
+.dev:hover {
+	text-decoration: none;
 }

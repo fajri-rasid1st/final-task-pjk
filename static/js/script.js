@@ -6,21 +6,21 @@ if (flashData.data("category") == "success") {
 		title: "Success",
 		icon: flashData.data("category"),
 		text: flashData.data("flash"),
-		confirmButtonText: "Ok, I got it!",
+		confirmButtonText: "Kembali",
 	});
 } else if (flashData.data("category") == "error") {
 	Swal.fire({
 		title: "Failed",
 		icon: flashData.data("category"),
 		text: flashData.data("flash"),
-		confirmButtonText: "Ok, I got it!",
+		confirmButtonText: "Kembali",
 	});
 } else if (flashData.data("category") == "info") {
 	Swal.fire({
 		title: "Information",
 		icon: flashData.data("category"),
 		text: flashData.data("flash"),
-		confirmButtonText: "Ok, I got it!",
+		confirmButtonText: "Kembali",
 	});
 }
 
@@ -36,9 +36,9 @@ $("#btn-delete").on("click", function (e) {
 		icon: "question",
 		showCancelButton: true,
 		confirmButtonColor: "#007BFF",
-		confirmButtonText: "Yes, delete it!",
+		confirmButtonText: "Ya!",
 		cancelButtonColor: "#DC3545",
-		cancelButtonText: "No, go back!",
+		cancelButtonText: "Tidak!",
 	}).then((result) => {
 		if (result.isConfirmed) {
 			document.location.href = href;

@@ -1,60 +1,38 @@
-{% extends 'layout.html' %}
+<!doctype html>
+<html lang="en">
 
-{% block content %}
+<head>
+	<!-- Required meta tags -->
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+	<!-- Bootstrap CSS -->
+	<link rel="stylesheet" href="{{url_for('static', filename='css/bootstrap.css')}}" />
+	<!-- Font Awesome -->
+	<link rel="stylesheet" href="{{url_for('static', filename='css/all.min.css')}}" />
+	<!-- External CSS -->
+	<link rel="stylesheet" href="{{url_for('static', filename='css/login.css')}}" />
+</head>
 
-<div class="content-section">
-	<form action="" method="POST">
-		{{ form.hidden_tag() }}
-
-		<legend class="display-4 mb-4">Login</legend>
-
-		<div class="form-group">
-			{{ form.username.label(class="form-control-label") }}
-			{% if form.username.errors %}
-			{{ form.username(class="form-control form-control-lg is-invalid") }}
-			<div class="invalid-feedback">
-				{% for error in form.username.errors %}
-				<span>{{ error }}</span>
-				{% endfor %}
-			</div>
-			{% else %}
-			{{ form.username(class="form-control form-control-lg") }}
-			{% endif %}
-		</div>
-
-		<div class="form-group">
-			{{ form.password.label(class="form-control-label") }}
-			{% if form.password.errors %}
-			{{ form.password(class="form-control form-control-lg is-invalid") }}
-			<div class="invalid-feedback">
-				{% for error in form.password.errors %}
-				<span>{{ error }}</span>
-				{% endfor %}
-			</div>
-			{% else %}
-			{{ form.password(class="form-control form-control-lg") }}
-			{% endif %}
-		</div>
-
-		<div class="form-check">
-			{{ form.remember(class="form-check-input") }}
-			{{ form.remember.label(class="form-check-label") }}
-		</div>
-
-		<div class="form-group mt-4 d-flex justify-content-between">
-			{{ form.submit(class="btn btn-secondary") }}
+<body class="text-center">
+	<main class="form-signin">
+		<form>
+			<i class="fas fa-school fa-5x text-dark mb-2"></i>
+			<h1 class="title mb-2">Sikolah</h1>
+			<h4 class="sub-title mb-4">Login</h4>
+			<label for="username" class="float-left"></label>
+			<label for="password" class="float-left"></label>
+			<input type="text" id="username" class="form-control" placeholder="Username" required autofocus>
+			<input type="password" id="password" class="form-control" placeholder="Password" required>
+			<button class="w-100 mt-2 mb-1 btn btn-lg btn-outline-info" type="submit">Login</button>
+		</form>
+		<div>
 			<small class="text-muted">
-				<a href="{{ url_for('reset_request') }}">Forgot password?</a>
+				Jika anda tidak memiliki akun, silahkan request ke admin
+				<a href="{{ url_for('login') }}" class="ml-1">di sini.</a>
 			</small>
 		</div>
-	</form>
-</div>
+		<p class="mt-5 mb-3 text-muted">&copy; 2020-2021</p>
+	</main>
+</body>
 
-<div class="border-top border-secondary pt-2 mb-5">
-	<small class="text-muted">
-		Don't have an account?
-		<a href="{{ url_for('registration') }}" class="ml-1">Sign Up</a>
-	</small>
-</div>
-
-{% endblock content %}
+</html>
