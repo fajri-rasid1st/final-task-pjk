@@ -61,12 +61,6 @@ body {
 	user-select: none;
 }
 
-@media (min-width: 768px) {
-	.bd-placeholder-img-lg {
-		font-size: 3.5rem;
-	}
-}
-
 .btn-outline-info {
 	color: #17a2b8;
 	border: 2px solid #17a2b8;

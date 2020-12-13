@@ -23,7 +23,7 @@ def login():
     if login_form.validate_on_submit():
         if login_form.username.data == "admin" and login_form.password.data == "admin":
             flash(f"Selamat Datang Di Sikolah, {login_form.username.data}.", "success")
-            return redirect(url_for("home"))
+            return redirect(url_for("admin.index"))
         else:
             flash(f"Username atau password salah.", "error")
             return redirect(url_for("login"))
