@@ -1,18 +1,27 @@
 from flask import Flask, render_template, url_for, flash, redirect, request
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
-from flask_admin.contrib.sqla import ModelView
 from flask_admin import Admin, BaseView, expose, AdminIndexView
+from flask_admin.contrib.sqla import ModelView
+from flask_mail import Mail, Message
 from forms import LoginForm
 
 app = Flask(__name__)
+
 app.config["SQLALCHEMY_DATABASE_URI"] = "mysql+pymysql://root:@localhost/final_task"
 app.config["SECRET_KEY"] = "c7de7e1c97f15fe"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+app.config["MAIL_SERVER"] = "smtp.gmail.com"
+app.config["MAIL_PORT"] = 465
+app.config["MAIL_USERNAME"] = "lee.jadon.k@gmail.com"
+app.config["MAIL_PASSWORD"] = "fwcydwxzbpsmeoqn"
+app.config["MAIL_USE_TLS"] = False
+app.config["MAIL_USE_SSL"] = True
 
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 admin = Admin(app)
+mail = Mail(app)
 
 
 class Siswa(db.Model):
@@ -104,6 +113,25 @@ def login():
             return redirect(url_for("login"))
 
     return render_template("login.html", title="Login", form=login_form)
+
+
+@app.route("/email")
+def email():
+    return render_template("email.html")
+
+
+@app.route("/send_message", methods=["POST", "GET"])
+def send_message():
+    if request.method == "POST":
+        email = request.form["email"]
+        msg = f"Username dan Password anda adalah {email}, {request.form['message']}"
+        subject = request.form["subject"]
+        message = Message(subject, sender="lee.jadon.k@gmail.com", recipients=[email])
+        message.body = msg
+        mail.send(message)
+        success = "Message sent"
+
+        return "berhasil"
 
 
 if __name__ == "__main__":

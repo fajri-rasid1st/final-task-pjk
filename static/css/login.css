@@ -7,10 +7,9 @@ body {
 
 body {
 	font-family: "poppins", sans-serif;
-	font-size: 16px;
 	display: flex;
-	padding-top: 40px;
-	padding-bottom: 40px;
+	font-size: 16px;
+	padding: 40px 0px;
 	background-color: #c9d6df;
 	color: #343a40;
 }
@@ -22,7 +21,7 @@ body {
 .form-signin {
 	width: 100%;
 	max-width: 330px;
-	padding: 15px;
+	padding: 10px;
 	margin: auto;
 }
 
