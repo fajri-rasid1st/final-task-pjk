@@ -39,23 +39,22 @@ body {
 	}
 }
 
-.sidebar .nav-link {
+.sidebar .nav-dash {
 	font-weight: 500;
 	color: #333;
 }
 
-.sidebar .nav-link .feather {
+.sidebar .nav-dash .feather {
 	margin-right: 4px;
 	color: #999;
 }
 
-.sidebar .nav-link.active {
+.sidebar .nav-dash.active {
 	color: #007bff;
 }
 
-.sidebar .nav-link:hover .feather,
-.sidebar .nav-link.active .feather {
-	color: inherit;
+.sidebar .nav-dash:hover {
+	color: #007bff !important;
 }
 
 .sidebar-heading {
@@ -107,4 +106,14 @@ body {
 
 .bg-dark {
 	background-color: #343a40;
+}
+
+.admin {
+	font-size: 22rem;
+}
+
+.admin-content {
+	margin: auto;
+	margin-top: 20vh;
+	margin-left: 15vw;
 }

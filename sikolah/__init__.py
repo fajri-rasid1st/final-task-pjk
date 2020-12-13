@@ -27,7 +27,7 @@ db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 
 # admin
-admin = Admin(app)
+admin = Admin(app, template_mode="bootstrap4")
 
 # mail
 mail = Mail(app)

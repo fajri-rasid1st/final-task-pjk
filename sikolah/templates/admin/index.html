@@ -12,7 +12,7 @@
     <!-- External CSS -->
     <link rel="stylesheet" href="{{url_for('static', filename='css/dashboard.css')}}" />
     <!-- title -->
-    
+    <title>Dashboard | Sikolah</title>
 </head>
 
 <body>
@@ -70,52 +70,38 @@
     <!-- main -->
     <div class="container-fluid">
         <div class="row">
-            <div class="col-md-4">
-                <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
-                    <div class="sidebar-sticky pt-3">
-                        <ul class="nav flex-column">
-                            <li class="nav-item">
-                                <a class="nav-link active" href="#">
-                                    <span data-feather="home"></span>
-                                    Dashboard <span class="sr-only">(current)</span>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">
-                                    <span data-feather="file"></span>
-                                    Orders
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">
-                                    <span data-feather="shopping-cart"></span>
-                                    Products
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">
-                                    <span data-feather="users"></span>
-                                    Customers
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">
-                                    <span data-feather="bar-chart-2"></span>
-                                    Reports
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">
-                                    <span data-feather="layers"></span>
-                                    Integrations
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </nav>
-            </div>
+            <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
+                <div class="sidebar-sticky pt-3">
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link nav-dash" href="/admin/siswa/">
+                                <i class="fas fa-user-graduate mr-1"></i>
+                                Siswa
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link nav-dash" href="/admin/pelajaran/">
+                                <i class="fas fa-book mr-1"></i>
+                                Pelajaran
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link nav-dash" href="/admin/nilai/">
+                                <i class="fas fa-poll mr-1"></i>
+                                Nilai
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link nav-dash" href="/admin/user/">
+                                <i class="fas fa-user mr-1"></i>
+                                Users
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
             <!-- main content section -->
-            <div class="col-md-8">
+            <div class="col-md-12">
                 {% with messages = get_flashed_messages(with_categories=True) %}
                 {% if messages %}
                 {% for category, message in messages %}
@@ -123,7 +109,10 @@
                 {% endfor %}
                 {% endif %}
                 {% endwith %}
-                {% block content %} {% endblock content %}
+                <div class="admin-content text-center">
+                    <i class="fas fa-users-cog admin"></i>
+                    <h1 class="display-4">Administrator</h1>
+                </div>
             </div>
         </div>
 
