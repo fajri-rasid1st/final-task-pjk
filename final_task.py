@@ -1,4 +1,4 @@
-from flask import Flask, render_template, url_for, flash, redirect
+from flask import Flask, render_template, url_for, flash, redirect, request
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
 from flask_admin.contrib.sqla import ModelView
@@ -97,10 +97,11 @@ def login():
 
     if login_form.validate_on_submit():
         if login_form.username.data == "admin" and login_form.password.data == "admin":
-            flash("Selamat Datang Di Sikolah.", "success")
+            flash(f"Selamat Datang Di Sikolah, {login_form.username.data}.", "success")
             return redirect(url_for("home"))
         else:
-            flash("Invalid username or password!", "error")
+            flash(f"Username atau password salah.", "error")
+            return redirect(url_for("login"))
 
     return render_template("login.html", title="Login", form=login_form)
 

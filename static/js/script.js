@@ -7,6 +7,7 @@ if (flashData.data("category") == "success") {
 		icon: flashData.data("category"),
 		text: flashData.data("flash"),
 		confirmButtonText: "Kembali",
+		background: "#F0F5F9",
 	});
 } else if (flashData.data("category") == "error") {
 	Swal.fire({
@@ -14,6 +15,7 @@ if (flashData.data("category") == "success") {
 		icon: flashData.data("category"),
 		text: flashData.data("flash"),
 		confirmButtonText: "Kembali",
+		background: "#F0F5F9",
 	});
 } else if (flashData.data("category") == "info") {
 	Swal.fire({
@@ -21,6 +23,7 @@ if (flashData.data("category") == "success") {
 		icon: flashData.data("category"),
 		text: flashData.data("flash"),
 		confirmButtonText: "Kembali",
+		background: "#F0F5F9",
 	});
 }
 
@@ -39,6 +42,7 @@ $("#btn-delete").on("click", function (e) {
 		confirmButtonText: "Ya!",
 		cancelButtonColor: "#DC3545",
 		cancelButtonText: "Tidak!",
+		background: "#F0F5F9",
 	}).then((result) => {
 		if (result.isConfirmed) {
 			document.location.href = href;
