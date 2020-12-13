@@ -1,0 +1,13 @@
+{% extends 'admin/index.html' %}
+
+{% block content %}
+
+<h1>Flask Mail Sending App</h1>
+<form action="{{url_for('send_message')}}" method="POST">
+    <input type="email" name="email" placeholder="Email" required id="">
+    <input type="text" name="subject" placeholder="Subject" required id="">
+    <textarea name="message" id="" cols="30" placeholder="Message Body" required rows="30"></textarea>
+    <input type="submit" value="Send Message">
+</form>
+
+{% endblock content %}

@@ -1,10 +1,7 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="{{url_for('static', filename='css/bootstrap.css')}}" />
     <!-- Font Awesome -->
@@ -66,7 +63,6 @@
             </div>
         </nav>
     </header>
-
     <!-- main -->
     <div class="container-fluid">
         <div class="row">
@@ -97,6 +93,12 @@
                                 Users
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link nav-dash" href="/email">
+                                <i class="far fa-paper-plane mr-1"></i>
+                                Send Email
+                            </a>
+                        </li>
                     </ul>
                 </div>
             </nav>
@@ -109,15 +111,15 @@
                 {% endfor %}
                 {% endif %}
                 {% endwith %}
+                {% block content %}
+                {% endblock content %}
                 <div class="admin-content text-center">
                     <i class="fas fa-users-cog admin"></i>
                     <h1 class="display-4">Administrator</h1>
                 </div>
             </div>
         </div>
-
     </div>
-
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"
         crossorigin="anonymous"></script>

@@ -33,7 +33,7 @@ def login():
 
 @app.route("/email")
 def email():
-    return render_template("email.html")
+    return render_template("email.html", title="Send Email")
 
 
 @app.route("/send_message", methods=["POST", "GET"])
@@ -47,4 +47,4 @@ def send_message():
         mail.send(message)
         success = "Message sent"
 
-        return "berhasil"
+        return redirect(url_for("admin.email"))
