@@ -55,50 +55,50 @@
                                 <div class="form-group">
                                     {{ form.tempat_lahir.label(class="form-control-label") }}
                                     {% if form.tempat_lahir.errors %}
-                                        {{ form.tempat_lahir(class="form-control form-control-lg is-invalid") }}
-                                        <div class="invalid-feedback">
-                                            {% for error in form.tempat_lahir.errors %}
-                                                <span>{{ error }}</span>
-                                            {% endfor %}
-                                        </div>
+                                    {{ form.tempat_lahir(class="form-control form-control-lg is-invalid") }}
+                                    <div class="invalid-feedback">
+                                        {% for error in form.tempat_lahir.errors %}
+                                        <span>{{ error }}</span>
+                                        {% endfor %}
+                                    </div>
                                     {% else %}
-                                        {{ form.tempat_lahir(class="form-control form-control-lg") }}
+                                    {{ form.tempat_lahir(class="form-control form-control-lg") }}
                                     {% endif %}
                                 </div>
                                 <div class="form-group">
                                     {{ form.tanggal_lahir.label(class="form-control-label") }}
                                     {% if form.tanggal_lahir.errors %}
-                                        {{ form.tanggal_lahir(class="form-control form-control-lg is-invalid") }}
-                                        <div class="invalid-feedback">
-                                            {% for error in form.tanggal_lahir.errors %}
-                                                <span>{{ error }}</span>
-                                            {% endfor %}
-                                        </div>
+                                    {{ form.tanggal_lahir(class="form-control form-control-lg is-invalid") }}
+                                    <div class="invalid-feedback">
+                                        {% for error in form.tanggal_lahir.errors %}
+                                        <span>{{ error }}</span>
+                                        {% endfor %}
+                                    </div>
                                     {% else %}
-                                        {{ form.tanggal_lahir(class="form-control form-control-lg") }}
+                                    {{ form.tanggal_lahir(class="form-control form-control-lg") }}
                                     {% endif %}
                                 </div>
                                 <div class="form-group">
                                     {{ form.alamat.label(class="form-control-label") }}
                                     {% if form.alamat.errors %}
-                                        {{ form.alamat(class="form-control form-control-lg is-invalid") }}
-                                        <div class="invalid-feedback">
-                                            {% for error in form.alamat.errors %}
-                                                <span>{{ error }}</span>
-                                            {% endfor %}
-                                        </div>
+                                    {{ form.alamat(class="form-control form-control-lg is-invalid") }}
+                                    <div class="invalid-feedback">
+                                        {% for error in form.alamat.errors %}
+                                        <span>{{ error }}</span>
+                                        {% endfor %}
+                                    </div>
                                     {% else %}
-                                        {{ form.alamat(class="form-control form-control-lg") }}
+                                    {{ form.alamat(class="form-control form-control-lg") }}
                                     {% endif %}
                                 </div>
                             </fieldset>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                        <div>
+                            {{ form.submit(class="btn btn-outline-info") }}
                         </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                            <div>
-                                {{ form.submit(class="btn btn-outline-info") }}
-                            </div>
-                        </div>
+                    </div>
                     </form>
                 </div>
             </div>
