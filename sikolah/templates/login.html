@@ -42,7 +42,7 @@
 					{{ form.username(class="form-control form-control-lg mb-0") }}
 					{% endif %}
 				</div>
-				<div class="form-group text-left mb-2">
+				<div class="form-group text-left mb-4">
 					{{ form.password.label(class="form-control-label mb-1") }}
 					{% if form.password.errors %}
 					{{ form.password(class="form-control form-control-lg is-invalid mb-0") }}
@@ -55,6 +55,15 @@
 					{{ form.password(class="form-control form-control-lg mb-0") }}
 					{% endif %}
 				</div>
+				<div class="form-group d-flex justify-content-between mb-1">
+					<small class="form-check d-flex align-items-center justify-content-between">
+						{{ form.remember(class="form-check-input remember") }}
+						{{ form.remember.label(class="form-check-label") }}
+					</small>
+					<small class="text-muted">
+						<a href="#">Forgot password?</a>
+					</small>
+				</div>
 				<div class="form-group mb-2">
 					{{ form.submit(class="w-100 mt-2 mb-1 btn btn-lg btn-outline-info")}}
 				</div>
@@ -66,7 +75,7 @@
 				<a href="{{ url_for('login') }}" class="ml-1">klick di sini.</a>
 			</small>
 		</div>
-		<p class="text-muted mt-5">&copy; 2020-2021</p>
+		<p class="text-muted mt-2">&copy; 2020-2021</p>
 	</main>
 </body>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"

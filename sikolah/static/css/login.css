@@ -75,3 +75,8 @@ body {
 .form-signin .is-invalid {
 	border: 2px solid #dc3545 !important;
 }
+
+.remember {
+	padding: 0 !important;
+	margin-bottom: 5px;
+}

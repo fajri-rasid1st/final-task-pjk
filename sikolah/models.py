@@ -1,5 +1,11 @@
-from sikolah import db, admin
+from sikolah import db, login_manager, admin
+from flask_login import UserMixin
 from flask_admin.contrib.sqla import ModelView
+
+
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(int(user_id))
 
 
 class Siswa(db.Model):
@@ -46,15 +52,15 @@ class Nilai(db.Model):
         return {c.name: str(getattr(self, c.name)) for c in self._table_.columns}
 
 
-class User(db.Model):
+class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True, nullable=False)
     user_name = db.Column(db.String(50), unique=True, nullable=False)
-    passsword = db.Column(db.String(128), nullable=False)
+    password = db.Column(db.String(128), nullable=False)
     hak_akses = db.Column(db.String(10), nullable=False)
     id_siswa = db.Column(db.Integer, db.ForeignKey("siswa.id"), nullable=False)
 
     def __repr__(self):
-        return f"User('{self.user_name}','{self.passsword}','{self.hak_akses}', '{self.id_siswa}')"
+        return f"User('{self.user_name}','{self.password}','{self.hak_akses}', '{self.id_siswa}')"
 
     def __asdict(self):
         return {c.name: str(getattr(self, c.name)) for c in self._table_.columns}
