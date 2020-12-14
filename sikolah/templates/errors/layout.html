@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="{{url_for('static', filename='css/bootstrap.css')}}" />
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="{{url_for('static', filename='css/all.min.css')}}" />
+    <!-- External CSS -->
+    <link rel="stylesheet" href="{{url_for('static', filename='css/error.css')}}" />
+    <!-- Title -->
+    <title>{{ title }} | Sikolah</title>
+</head>
+
+<body>
+    {% block content %} {% endblock content %}
+</body>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"
+    crossorigin="anonymous"></script>
+<script src="{{url_for('static', filename='js/jquery-3.5.1.js')}}"></script>
+<script src="{{url_for('static', filename='js/sweetalert2.all.min.js')}}"></script>
+<script src="{{url_for('static', filename='js/script.js')}}"></script>
+
+</html>

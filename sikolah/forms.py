@@ -15,19 +15,10 @@ class LoginForm(FlaskForm):
     remember = BooleanField("Remember me")
     submit = SubmitField("Login")
 
+
 class UpdateProfileForm(FlaskForm):
-    nama = StringField('Nama', validators=[DataRequired()], render_kw={'autofocus': 'on'})
-    
-
-
-class SendAccountForm(FlaskForm):
-    # submit = SubmitField("Send Account")
     pass
 
 
-# class SelectSemesterForm(FlaskForm):
-#     options = SelectField(
-#         u"Pilih Semester",
-#         choices=[("1", "Semester 1"), ("2", "Semester 2"), ("3", "Semester 3")],
-#     )
-#     submit = SubmitField("Submit")
+class SendAccountForm(FlaskForm):
+    pass

@@ -62,9 +62,9 @@ body {
 	user-select: none;
 }
 
-.btn-outline-info {
-	color: #17a2b8;
-	border: 2px solid #17a2b8;
+.btn-outline-dark {
+	color: #343a40;
+	border: 2px solid #343a40;
 	font-weight: 500;
 }
 

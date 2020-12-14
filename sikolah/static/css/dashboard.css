@@ -49,7 +49,7 @@ textarea#content {
 
 .sidebar .nav-dash:hover {
 	background-color: #343a40;
-	color: #F8F9FA !important;
+	color: #f8f9fa !important;
 }
 
 .profile-img {
@@ -63,7 +63,7 @@ textarea#content {
 }
 
 .admin-content {
-	top: 40px;
+	top: 20px;
 	left: 540px;
 	position: absolute;
 	opacity: 0.5;

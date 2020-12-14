@@ -70,6 +70,9 @@ class User(db.Model, UserMixin):
 
 class MyModelView(ModelView):
     def is_accessible(self):
+        if current_user.is_authenticated:
+            if current_user.hak_akses == "siswa":
+                return False
         return current_user.is_authenticated
 
     def inaccessible_callback(self, name, **kwargs):
@@ -78,13 +81,19 @@ class MyModelView(ModelView):
 
 class MyAdminIndexView(AdminIndexView):
     def is_accessible(self):
+        if current_user.is_authenticated:
+            if current_user.hak_akses == "siswa":
+                return False
         return current_user.is_authenticated
+
+    def inaccessible_callback(self, name, **kwargs):
+        return redirect(url_for("login"))
 
 
 # admin
 admin = Admin(app, template_mode="bootstrap4", index_view=MyAdminIndexView())
 
-admin.add_view(ModelView(Siswa, db.session))
-admin.add_view(ModelView(Pelajaran, db.session))
-admin.add_view(ModelView(Nilai, db.session))
-admin.add_view(ModelView(User, db.session))
+admin.add_view(MyModelView(Siswa, db.session))
+admin.add_view(MyModelView(Pelajaran, db.session))
+admin.add_view(MyModelView(Nilai, db.session))
+admin.add_view(MyModelView(User, db.session))
