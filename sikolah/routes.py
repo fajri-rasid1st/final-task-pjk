@@ -89,9 +89,10 @@ def send_message():
 @app.route("/profile", methods=["POST", "GET"])
 def profile():
     data = current_user.data_siswa
-    return render_template('user_info.html', title="Profil", data=data)
+    return render_template("user_info.html", title="Profil", data=data)
 
-@app.route('/profile/edit', methods=['POST', 'GET'])
+
+@app.route("/profile/edit", methods=["POST", "GET"])
 def edit_profile():
     form = UpdateProfileForm()
     siswa = current_user.data_siswa
@@ -100,22 +101,23 @@ def edit_profile():
         siswa.tanggal_lahir = form.tanggal_lahir.data
         siswa.alamat = form.alamat.data
         db.session.commit()
-        return redirect(url_for('account'))
-    elif request.method == 'GET':
+        return redirect(url_for("account"))
+    elif request.method == "GET":
         form.tempat_lahir.data = siswa.tempat_lahir
         form.tanggal_lahir.data = siswa.tanggal_lahir
         form.alamat.data = siswa.alamat
     return "lol"
 
+
 @app.route("/scores", methods=["POST", "GET"])
 @login_required
 def scores():
     if request.method == "POST":
-        selected_semester = request.form.get('select_semester')
-        if selected_semester == 'Pilih Semester':
-            return redirect('/scores')
-        else :
-            return redirect(f'/scores/{selected_semester}')
+        selected_semester = request.form.get("select_semester")
+        if selected_semester == "Pilih Semester":
+            return redirect("/scores")
+        else:
+            return redirect(f"/scores/{selected_semester}")
     else:
         course_list = []
 
@@ -135,7 +137,7 @@ def scores():
         )
 
 
-@app.route('/scores/<int:semester>')
+@app.route("/scores/<int:semester>")
 def scores_semester(semester):
     course_list = []
 
@@ -148,7 +150,7 @@ def scores_semester(semester):
 
     selected_semester = []
     for i in sorted_course_list:
-        if(i[0] == semester):
+        if i[0] == semester:
             selected_semester.append(i[1])
 
     return render_template(
@@ -158,3 +160,27 @@ def scores_semester(semester):
         data_semester=max_semester[len(max_semester) - 1],
         data_siswa=current_user.data_siswa,
     )
+
+
+@app.route("/profile", methods=["POST", "GET"])
+@login_required
+def profile():
+    data = current_user.data_siswa
+    return render_template("user_info.html", title="Profil", data=data)
+
+
+@app.route("/profile/edit", methods=["POST", "GET"])
+def edit_profile():
+    form = UpdateProfileForm()
+    siswa = current_user.data_siswa
+    if form.validate_on_submit():
+        siswa.tempat_lahir = form.tempat_lahir.data
+        siswa.tanggal_lahir = form.tanggal_lahir.data
+        siswa.alamat = form.alamat.data
+        db.session.commit()
+        return redirect(url_for("account"))
+    elif request.method == "GET":
+        form.tempat_lahir.data = siswa.tempat_lahir
+        form.tanggal_lahir.data = siswa.tanggal_lahir
+        form.alamat.data = siswa.alamat
+    return "lol"

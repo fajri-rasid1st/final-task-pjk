@@ -92,9 +92,11 @@ $RECYCLE.BIN/
 *.msp
 *.lnk
 static/node_modules/
+migrations/
 .vscode/*
 !.vscode/tasks.json
 !.vscode/launch.json
 *.code-workspace
 .history
 .ionide
+
