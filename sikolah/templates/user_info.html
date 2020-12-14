@@ -2,11 +2,66 @@
 
 {% block content %}
 
-<div class="content-section">
-    <div class="media">
-        <div class="media-body text-center">
+<article class="media content-section">
+    <div class="media-body">
+        <h1 class="display-4 mb-4">Profil Mahasiswa</h1>
+        <div class="row mb-3">
+            <div class="col-lg-3">
+                Nama
+            </div>
+            <div class="col">
+                :
+            </div>
+            <div class="col-lg-8">
+                {{ data.nama }}
+            </div>
         </div>
+        <div class="row mb-3">
+            <div class="col-lg-3">
+                NIM
+            </div>
+            <div class="col">
+                :
+            </div>
+            <div class="col-lg-8">
+                {{ data.nis }}
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-lg-3">
+                Tempat Lahir
+            </div>
+            <div class="col">
+                :
+            </div>
+            <div class="col-lg-8">
+                {{ data.tempat_lahir }}
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-lg-3">
+                Tanggal Lahir
+            </div>
+            <div class="col">
+                :
+            </div>
+            <div class="col-lg-8">
+                {{ data.tanggal_lahir }}
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-lg-3">
+                Alamat
+            </div>
+            <div class="col">
+                :
+            </div>
+            <div class="col-lg-8">
+                {{ data.alamat }}
+            </div>
+        </div>
+        <button type="submit" class="btn btn-dark">Edit</button>
     </div>
-</div>
+</article>
 
 {% endblock content %}

@@ -59,7 +59,7 @@ class User(db.Model, UserMixin):
     user_name = db.Column(db.String(50), unique=True, nullable=False)
     password = db.Column(db.String(128), nullable=False)
     hak_akses = db.Column(db.String(10), nullable=False)
-    id_siswa = db.Column(db.Integer, db.ForeignKey("siswa.id"), nullable=False)
+    id_siswa = db.Column(db.Integer, db.ForeignKey("siswa.id"))
 
     def __repr__(self):
         return f"User('{self.user_name}','{self.password}','{self.hak_akses}', '{self.id_siswa}')"
