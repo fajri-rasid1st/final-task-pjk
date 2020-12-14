@@ -104,28 +104,13 @@ a.article-title:hover {
 	font-size: 2.5rem;
 }
 
-.pagination .page-item {
-	border: 1px solid #bbbbbb;
-}
-
-.pagination .page-item .page-link {
-	font-weight: 500;
-	box-shadow: none;
-	color: #343a40;
-}
-
-.pagination .page-item.active .page-link {
-	background-color: #52616b;
-	border: 1px solid #bbbbbb;
-	color: whitesmoke;
-}
-
 .textarea-error {
 	border: 2px solid #dc3545 !important;
 }
 
 .info {
 	cursor: pointer;
+	border: 2px solid #bbbbbb;
 }
 
 .dev {

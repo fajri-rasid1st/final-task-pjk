@@ -10,25 +10,31 @@ class Siswa(db.Model):
     tanggal_lahir = db.Column(db.Date, nullable=False)
     alamat = db.Column(db.String(100), nullable=False)
     email = db.Column(db.String(255), unique=True, nullable=False)
-    nilai = db.relationship("Nilai", backref="data_nilai", lazy=True)
-    user = db.relationship("User", backref="data_user", lazy=True)
+
+    user = db.relationship("User", backref="data_siswa", lazy=True)
+
+    nilai = db.relationship("Nilai", backref=db.backref("data_nilai_siswa", lazy=True))
 
     def __repr__(self):
         return f"Siswa('{self.nama}', '{self.nis}')"
 
-    def _asdict(self):
-        return {c.name: str(getattr(self, c.name)) for c in self.__table__.columns}
+    def __asdict(self):
+        return {c.name: str(getattr(self, c.name)) for c in self._table_.columns}
 
 
 class Pelajaran(db.Model):
     id = db.Column(db.Integer, primary_key=True, nullable=False)
     nama_pelajaran = db.Column(db.String(50), nullable=False)
 
+    nilai = db.relationship(
+        "Nilai", backref=db.backref("data_pelajaran_siswa", lazy=True)
+    )
+
     def __repr__(self):
         return f"Pelajaran('{self.nama_pelajaran}')"
 
-    def _asdict(self):
-        return {c.name: str(getattr(self, c.name)) for c in self.__table__.columns}
+    def __asdict(self):
+        return {c.name: str(getattr(self, c.name)) for c in self._table_.columns}
 
 
 class Nilai(db.Model):
@@ -38,11 +44,13 @@ class Nilai(db.Model):
     id_siswa = db.Column(db.Integer, db.ForeignKey("siswa.id"), nullable=False)
     id_pelajar = db.Column(db.Integer, db.ForeignKey("pelajaran.id"), nullable=False)
 
+    siswa = db.relationship("Siswa", backref=db.backref("data_nilai_siswa", lazy=True))
+
     def __repr__(self):
         return f"Nilai('{self.id_siswa}', '{self.id_pelajar}', '{self.semester}', '{self.nilai}')"
 
-    def _asdict(self):
-        return {c.name: str(getattr(self, c.name)) for c in self.__table__.columns}
+    def __asdict(self):
+        return {c.name: str(getattr(self, c.name)) for c in self._table_.columns}
 
 
 class User(db.Model):
@@ -55,8 +63,8 @@ class User(db.Model):
     def __repr__(self):
         return f"User('{self.user_name}','{self.passsword}','{self.hak_akses}', '{self.id_siswa}')"
 
-    def _asdict(self):
-        return {c.name: str(getattr(self, c.name)) for c in self.__table__.columns}
+    def __asdict(self):
+        return {c.name: str(getattr(self, c.name)) for c in self._table_.columns}
 
 
 admin.add_view(ModelView(Siswa, db.session))
