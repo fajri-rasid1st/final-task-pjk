@@ -1,0 +1,26 @@
+{% extends 'layout.html' %} {% block content %}
+
+<article class="media content-section">
+  <div class="media-body">
+    <h1 class="display-4 mb-4">View Nilai</h1>
+    <table class="table table-bordered">
+      <thead class="bg-dark text-light">
+        <tr>
+          <th scope="col">Mata Kuliah</th>
+          <th scope="col">Semester</th>
+          <th scope="col">Nilai</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for nilai in data %}
+        <tr>
+          <td>{{ nilai.data_pelajaran_siswa.nama_pelajaran }}</td>
+          <td>{{ nilai.semester }}</td>
+          <td>{{ nilai.nilai }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</article>
+{% endblock %}

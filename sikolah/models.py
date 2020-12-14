@@ -11,9 +11,13 @@ class Siswa(db.Model):
     alamat = db.Column(db.String(100), nullable=False)
     email = db.Column(db.String(255), unique=True, nullable=False)
 
+
     user = db.relationship("User", backref="data_siswa", lazy=True)
 
     nilai = db.relationship("Nilai", backref=db.backref("data_nilai_siswa", lazy=True))
+
+    nilai = db.relationship('Nilai', backref=db.backref(
+        'data_nilai_siswa', lazy=True))
 
     def __repr__(self):
         return f"Siswa('{self.nama}', '{self.nis}')"
@@ -25,6 +29,7 @@ class Siswa(db.Model):
 class Pelajaran(db.Model):
     id = db.Column(db.Integer, primary_key=True, nullable=False)
     nama_pelajaran = db.Column(db.String(50), nullable=False)
+
 
     nilai = db.relationship(
         "Nilai", backref=db.backref("data_pelajaran_siswa", lazy=True)
@@ -42,7 +47,11 @@ class Nilai(db.Model):
     semester = db.Column(db.Integer, nullable=False)
     nilai = db.Column(db.Numeric(5, 2), nullable=False)
     id_siswa = db.Column(db.Integer, db.ForeignKey("siswa.id"), nullable=False)
-    id_pelajar = db.Column(db.Integer, db.ForeignKey("pelajaran.id"), nullable=False)
+    id_pelajar = db.Column(db.Integer, db.ForeignKey(
+        "pelajaran.id"), nullable=False)
+
+    siswa = db.relationship('Siswa', backref=db.backref(
+        'data_siswa', lazy=True))
 
     siswa = db.relationship("Siswa", backref=db.backref("data_nilai_siswa", lazy=True))
 
