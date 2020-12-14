@@ -150,28 +150,19 @@ def scores_semester(semester):
 @app.route("/profile", methods=["POST", "GET"])
 @login_required
 def profile():
-    data = current_user.data_siswa
-    return render_template("user_info.html", title="My Profil", data=data)
-
-
-@app.route("/profile/edit", methods=["POST", "GET"])
-@login_required
-def edit_profile():
     form = UpdateProfileForm()
 
     siswa = current_user.data_siswa
-
-    if form.validate_on_submit():
-        siswa.tempat_lahir = form.tempat_lahir.data
-        siswa.tanggal_lahir = form.tanggal_lahir.data
-        siswa.alamat = form.alamat.data
-
-        db.session.commit()
-
-        return redirect(url_for("account"))
+    if request.method == 'POST':
+        if form.validate_on_submit():
+            siswa.tempat_lahir = form.tempat_lahir.data
+            siswa.tanggal_lahir = form.tanggal_lahir.data
+            siswa.alamat = form.alamat.data
+            db.session.commit()
+            flash('Berhasil edit akun!', 'success')
+            return redirect(url_for('profile'))
     elif request.method == "GET":
         form.tempat_lahir.data = siswa.tempat_lahir
         form.tanggal_lahir.data = siswa.tanggal_lahir
         form.alamat.data = siswa.alamat
-
-    return "hello world"
+    return render_template("user_info.html", title="Profil", data=siswa, form=form)

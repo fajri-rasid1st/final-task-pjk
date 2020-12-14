@@ -26,10 +26,82 @@
                 <td>Alamat</td>
                 <td>&#8192:&#8192 {{ data.alamat }}</td>
             </tr>
+            <tr>
+                <td>Email</td>
+                <td>&#8192:&#8192 {{ data.email }}</td>
+            </tr>
         </table>
+        <!-- <button type="submit" class="btn btn-dark">Edit</button> -->
+        <!-- Button trigger modal -->
         <div class="form-group mt-4 mb-2 d-flex justify-content-between">
             <div></div>
-            <button type="submit" class="btn btn-dark">Edit Profile</button>
+            <button type="submit" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                Edit Profile
+            </button>
+        </div>
+        <!-- Modal -->
+        <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+            aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="staticBackdropLabel">Edit Profil</h5>
+                    </div>
+                    <div class="modal-body">
+                        <form method="POST" action="" enctype="multipart/form-data">
+                            {{ form.hidden_tag() }}
+                            <fieldset class="form-group">
+                                <legend class="border-bottom mb-4">Account Info</legend>
+                                <div class="form-group">
+                                    {{ form.tempat_lahir.label(class="form-control-label") }}
+                                    {% if form.tempat_lahir.errors %}
+                                        {{ form.tempat_lahir(class="form-control form-control-lg is-invalid") }}
+                                        <div class="invalid-feedback">
+                                            {% for error in form.tempat_lahir.errors %}
+                                                <span>{{ error }}</span>
+                                            {% endfor %}
+                                        </div>
+                                    {% else %}
+                                        {{ form.tempat_lahir(class="form-control form-control-lg") }}
+                                    {% endif %}
+                                </div>
+                                <div class="form-group">
+                                    {{ form.tanggal_lahir.label(class="form-control-label") }}
+                                    {% if form.tanggal_lahir.errors %}
+                                        {{ form.tanggal_lahir(class="form-control form-control-lg is-invalid") }}
+                                        <div class="invalid-feedback">
+                                            {% for error in form.tanggal_lahir.errors %}
+                                                <span>{{ error }}</span>
+                                            {% endfor %}
+                                        </div>
+                                    {% else %}
+                                        {{ form.tanggal_lahir(class="form-control form-control-lg") }}
+                                    {% endif %}
+                                </div>
+                                <div class="form-group">
+                                    {{ form.alamat.label(class="form-control-label") }}
+                                    {% if form.alamat.errors %}
+                                        {{ form.alamat(class="form-control form-control-lg is-invalid") }}
+                                        <div class="invalid-feedback">
+                                            {% for error in form.alamat.errors %}
+                                                <span>{{ error }}</span>
+                                            {% endfor %}
+                                        </div>
+                                    {% else %}
+                                        {{ form.alamat(class="form-control form-control-lg") }}
+                                    {% endif %}
+                                </div>
+                            </fieldset>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                            <div>
+                                {{ form.submit(class="btn btn-outline-info") }}
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
 </article>
