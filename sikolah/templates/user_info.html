@@ -5,6 +5,7 @@
 <article class="media content-section mb-5">
     <div class="media-body">
         <h1 class="display-4 mb-4">Profil Mahasiswa</h1>
+        <img class="rounded-circle account-img" src="{{ gambar }}">
         <table style="font-weight: 500;">
             <tr>
                 <td>Nama</td>
@@ -89,6 +90,15 @@
                                         </div>
                                     {% else %}
                                         {{ form.alamat(class="form-control form-control-lg") }}
+                                    {% endif %}
+                                </div>
+                                <div class="form-group">
+                                    {{ form.gambar.label() }}
+                                    {{ form.gambar(class="form-control-file") }}
+                                    {% if form.gambar.errors %}
+                                        {% for error in form.gambar.errors %}
+                                            <span class="text-danger">{{ error }}</span></br>
+                                        {% endfor %}
                                     {% endif %}
                                 </div>
                             </fieldset>

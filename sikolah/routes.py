@@ -5,6 +5,9 @@ from sikolah import app, mail, db
 from sikolah.forms import LoginForm, EmailForm, UpdateProfileForm
 from sikolah.models import Siswa, Pelajaran, Nilai, User
 import datetime
+import secrets
+import os
+from PIL import Image
 
 
 @app.route("/")
@@ -146,18 +149,34 @@ def scores_semester(semester):
         data_siswa=current_user.data_siswa,
     )
 
+def save_picture(form_picture):
+    random_hex = secrets.token_hex(8)
+    _, f_ext = os.path.splitext(form_picture.filename)
+    picture_fn = random_hex + f_ext
+    picture_path = os.path.join(app.root_path, 'static/img', picture_fn)
+
+    output_size = (125, 125)
+    i = Image.open(form_picture)
+    i.thumbnail(output_size)
+    i.save(picture_path)
+
+    return picture_fn
 
 @app.route("/profile", methods=["POST", "GET"])
 @login_required
 def profile():
     form = UpdateProfileForm()
-
     siswa = current_user.data_siswa
+    file_gambar = url_for('static', filename='img/' + siswa.gambar)
     if request.method == 'POST':
         if form.validate_on_submit():
+            if form.gambar.data:
+                simpan_gambar = save_picture(form.gambar.data)
+                siswa.gambar = simpan_gambar
             siswa.tempat_lahir = form.tempat_lahir.data
             siswa.tanggal_lahir = form.tanggal_lahir.data
             siswa.alamat = form.alamat.data
+            
             db.session.commit()
             flash('Berhasil edit akun!', 'success')
             return redirect(url_for('profile'))
@@ -165,4 +184,5 @@ def profile():
         form.tempat_lahir.data = siswa.tempat_lahir
         form.tanggal_lahir.data = siswa.tanggal_lahir
         form.alamat.data = siswa.alamat
-    return render_template("user_info.html", title="Profil", data=siswa, form=form)
+        form.gambar.data = siswa.gambar
+    return render_template("user_info.html", title="Profil", data=siswa, form=form, gambar=file_gambar)

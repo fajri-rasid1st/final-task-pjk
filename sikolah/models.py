@@ -17,6 +17,7 @@ class Siswa(db.Model):
     tempat_lahir = db.Column(db.String(30), nullable=False)
     tanggal_lahir = db.Column(db.Date, nullable=False)
     alamat = db.Column(db.String(100), nullable=False)
+    gambar = db.Column(db.String(20), nullable=False, default='default.jpg')
     email = db.Column(db.String(255), unique=True, nullable=False)
     user = db.relationship("User", backref="data_siswa", lazy=True)
 
