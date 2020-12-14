@@ -1,8 +1,9 @@
 from flask import render_template, url_for, flash, redirect, request
+from json import dump
 from flask_login import login_user, login_required, current_user, logout_user
 from flask_mail import Message
-from sikolah import app, mail
-from sikolah.forms import LoginForm
+from sikolah import app, mail, db
+from sikolah.forms import LoginForm, UpdateProfileForm
 from sikolah.models import Siswa, Pelajaran, Nilai, User
 import datetime
 
@@ -58,10 +59,11 @@ def logout():
     return redirect(url_for("login"))
 
 
-@app.route("/email")
+@app.route("/admin/email")
 @login_required
 def email():
-    return render_template("email.html", title="Send Email")
+    return "Lol"
+    # return render_template("email.html", title="Send Email")
 
 
 @app.route("/send_message", methods=["POST", "GET"])
@@ -77,15 +79,57 @@ def send_message():
         return redirect(url_for("admin.email"))
 
 
-@app.route("/profile")
+@app.route("/profile", methods=["POST", "GET"])
 def profile():
     data = current_user.data_siswa
-    return render_template("user_info.html", data=data)
+    return render_template('user_info.html', title="Profil", data=data)
 
+@app.route('/profile/edit', methods=['POST', 'GET'])
+def edit_profile():
+    form = UpdateProfileForm()
+    siswa = current_user.data_siswa
+    if form.validate_on_submit():
+        siswa.tempat_lahir = form.tempat_lahir.data
+        siswa.tanggal_lahir = form.tanggal_lahir.data
+        siswa.alamat = form.alamat.data
+        db.session.commit()
+        return redirect(url_for('account'))
+    elif request.method == 'GET':
+        form.tempat_lahir.data = siswa.tempat_lahir
+        form.tanggal_lahir.data = siswa.tanggal_lahir
+        form.alamat.data = siswa.alamat
+    return "lol"
 
 @app.route("/scores", methods=["POST", "GET"])
 @login_required
 def scores():
+    if request.method == "POST":
+        selected_semester = request.form.get('select_semester')
+        if selected_semester == 'Pilih Semester':
+            return redirect('/scores')
+        else :
+            return redirect(f'/scores/{selected_semester}')
+    else:
+        course_list = []
+
+        for i in list(current_user.data_siswa.data_nilai_siswa):
+            course_list.append([i.semester, i])
+
+        sorted_course_list = sorted(course_list, key=lambda index: index[0])
+
+        max_semester = [i[0] for i in sorted_course_list]
+
+        return render_template(
+            "scores.html",
+            title="Nilai Siswa",
+            data_nilai=[i[1] for i in sorted_course_list],
+            data_semester=max_semester[len(max_semester) - 1],
+            data_siswa=current_user.data_siswa,
+        )
+
+
+@app.route('/scores/<int:semester>')
+def scores_semester(semester):
     course_list = []
 
     for i in list(current_user.data_siswa.data_nilai_siswa):
@@ -95,18 +139,15 @@ def scores():
 
     max_semester = [i[0] for i in sorted_course_list]
 
-    # selected_semester = []
-    # if request.method == "POST":
-    #     semester = request.form.get('select_semester')
-    #     for i in sorted_course_list:
-    #         if(i[0] == semester):
-    #             selected_semester.append(i[1])
-    #     return selected_semester
+    selected_semester = []
+    for i in sorted_course_list:
+        if(i[0] == semester):
+            selected_semester.append(i[1])
 
     return render_template(
         "scores.html",
         title="Nilai Siswa",
-        data_nilai=[i[1] for i in sorted_course_list],
+        data_nilai=selected_semester,
         data_semester=max_semester[len(max_semester) - 1],
         data_siswa=current_user.data_siswa,
     )
