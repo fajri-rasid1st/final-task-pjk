@@ -1,11 +1,11 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField
-from wtforms.validators import DataRequired,ValidationError, Email
+from wtforms.validators import DataRequired, ValidationError, Email
 
 
 class LoginForm(FlaskForm):
     username = StringField(
-        "Username",
+        "Username or Email",
         validators=[DataRequired()],
         render_kw={"placeholder": "Username", "autofocus": "on"},
     )
@@ -17,3 +17,4 @@ class LoginForm(FlaskForm):
 
 class SendAccountForm(FlaskForm):
     pass
+    # submit = SubmitField("Send Account")

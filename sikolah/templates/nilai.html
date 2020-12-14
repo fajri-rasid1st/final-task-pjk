@@ -4,21 +4,33 @@
 
 <article class="media content-section">
     <div class="media-body">
-        <h1 class="display-4 mb-4">View Nilai</h1>
-        <table class="table table-bordered">
-            <thead class="bg-dark text-light">
+        <h1 class="display-4 mb-4">Nilai Siswa</h1>
+        <div class="detail-siswa mb-4">
+            <table style="font-weight: 500;">
                 <tr>
-                    <th scope="col">Mata Kuliah</th>
-                    <th scope="col">Semester</th>
-                    <th scope="col">Nilai</th>
+                    <td>Nama</td>
+                    <td>&#8192:&#8192 {{ data_siswa.nama }}</td>
+                </tr>
+                <tr>
+                    <td>NIM</td>
+                    <td>&#8192:&#8192 {{ data_siswa.nis }}</td>
+                </tr>
+            </table>
+        </div>
+        <table class="table table-bordered table-striped">
+            <thead class="text-center bg-dark text-light">
+                <tr>
+                    <th scope="col" style="font-weight: 500;">Mata Kuliah</th>
+                    <th scope=" col" style="font-weight: 500;">Semester</th>
+                    <th scope=" col" style="font-weight: 500;">Nilai</th>
                 </tr>
             </thead>
             <tbody>
-                {% for nilai in data %}
+                {% for nilai in data_nilai %}
                 <tr>
                     <td>{{ nilai.data_pelajaran_siswa.nama_pelajaran }}</td>
-                    <td>{{ nilai.semester }}</td>
-                    <td>{{ nilai.nilai }}</td>
+                    <td class="text-center">{{ nilai.semester }}</td>
+                    <td class="text-center">{{ nilai.nilai }}</td>
                 </tr>
                 {% endfor %}
             </tbody>

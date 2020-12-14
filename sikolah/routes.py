@@ -48,15 +48,18 @@ def send_message():
         return redirect(url_for("admin.email"))
 
 
-@app.route("/nilai")
-def nilai():
-    temp_list = list(User.query.get(1).data_user.data_siswa)
-    sem = []
+@app.route("/scores")
+def scores():
+    course_list = []
 
-    for i in temp_list:
-        sem.append([i.semester, i])
+    for i in list(User.query.get(1).data_siswa.data_nilai_siswa):
+        course_list.append([i.semester, i])
 
-    sorted_sem = sorted(sem, key=lambda index: index[0])
-    sorted_sem_nilai = [i[1] for i in sorted_sem]
+    sorted_course_list = sorted(course_list, key=lambda index: index[0])
 
-    return render_template("nilai.html", title="Nilai Siswa", data=sorted_sem_nilai)
+    return render_template(
+        "nilai.html",
+        title="Nilai Siswa",
+        data_nilai=[i[1] for i in sorted_course_list],
+        data_siswa=User.query.get(1).data_siswa,
+    )
