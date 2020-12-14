@@ -1,0 +1,24 @@
+@import url("https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&display=swap");
+
+* {
+	padding: 0;
+	margin: 0;
+	box-sizing: border-box;
+	outline: none;
+}
+
+body {
+	font-family: poppins, sans-serif;
+	font-size: 16px;
+	background-color: #c9d6df;
+	color: #343a40;
+	margin-top: 9rem;
+}
+
+.content-section {
+	background: #f0f5f9;
+	padding: 15px 22px;
+	border: 2px solid #bbbbbb;
+	border-radius: 6px;
+	margin-bottom: 20px;
+}

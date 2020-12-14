@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 
 <head>
@@ -30,16 +30,10 @@
 				</button>
 				<div class="collapse navbar-collapse" id="navbarToggle">
 					<div class="navbar-nav mr-auto">
-						{% if current_user.hak_akses == "admin" %}
-						<a class="nav-item nav-link" href="{{url_for('admin.index')}}">Dashboard</a>
-						{% endif %}
-
 						<a class="nav-item nav-link" href="{{url_for('home')}}">Home</a>
-
 						{% if current_user.hak_akses == "siswa" %}
 						<a class="nav-item nav-link" href="{{url_for('scores')}}">Nilai</a>
 						{% endif %}
-
 						<a class="nav-item nav-link" href="{{url_for('about')}}">About</a>
 					</div>
 					<!-- Navbar Right Side -->
@@ -60,6 +54,14 @@
 										Profil
 									</a>
 								</li>
+								{% if current_user.hak_akses == "admin" %}
+								<li>
+									<a class="dropdown-item px-3 btn-outline-info" href="{{url_for('admin.index')}}">
+										<i class="fas fa-columns mr-1"></i>
+										Dashboard
+									</a>
+								</li>
+								{% endif %}
 								<li>
 									<a class="dropdown-item px-3 btn-outline-info" href="{{ url_for('logout') }}">
 										<i class="fas fa-sign-out-alt mr-1"></i>
@@ -73,7 +75,6 @@
 			</div>
 		</nav>
 	</header>
-
 	<!-- main -->
 	<main role="main" class="container">
 		<div class="row">

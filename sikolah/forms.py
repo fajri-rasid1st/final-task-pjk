@@ -21,15 +21,10 @@ class UpdateProfileForm(FlaskForm):
     tanggal_lahir = DateField('Tanggal Lahir', validators=[DataRequired()] , format='%Y-%m-%d')
     alamat = StringField('Alamat', validators=[DataRequired()])
 
+class EmailForm(FlaskForm):
+    emails = SelectField("Select Email Address :", choices=[])
+    submit = SubmitField("Send Email")
 
-class SendAccountForm(FlaskForm):
-    # submit = SubmitField("Send Account")
+
+class UpdateForm(FlaskForm):
     pass
-
-
-# class SelectSemesterForm(FlaskForm):
-#     options = SelectField(
-#         u"Pilih Semester",
-#         choices=[("1", "Semester 1"), ("2", "Semester 2"), ("3", "Semester 3")],
-#     )
-#     submit = SubmitField("Submit")

@@ -14,8 +14,9 @@ label {
 
 input[type="text"],
 input[type="password"],
+select,
 textarea#content {
-	border: 2px solid #bbbbbb;
+	border: 2px solid #bbbbbb !important;
 }
 
 .sidebar {
@@ -49,7 +50,7 @@ textarea#content {
 
 .sidebar .nav-dash:hover {
 	background-color: #343a40;
-	color: #F8F9FA !important;
+	color: #f8f9fa !important;
 }
 
 .profile-img {
@@ -63,10 +64,10 @@ textarea#content {
 }
 
 .admin-content {
-	top: 40px;
+	top: 20px;
 	left: 540px;
 	position: absolute;
-	opacity: 0.5;
+	opacity: 0.2;
 	z-index: -99;
 }
 
