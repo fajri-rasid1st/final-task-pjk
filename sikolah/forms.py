@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, BooleanField
+from wtforms import StringField, PasswordField, SubmitField, BooleanField, SelectField
 from wtforms.validators import DataRequired, ValidationError
 
 
@@ -21,5 +21,13 @@ class UpdateProfileForm(FlaskForm):
 
 
 class SendAccountForm(FlaskForm):
-    pass
     # submit = SubmitField("Send Account")
+    pass
+
+
+# class SelectSemesterForm(FlaskForm):
+#     options = SelectField(
+#         u"Pilih Semester",
+#         choices=[("1", "Semester 1"), ("2", "Semester 2"), ("3", "Semester 3")],
+#     )
+#     submit = SubmitField("Submit")

@@ -1,6 +1,6 @@
 from flask import render_template, url_for, flash, redirect, request
-from flask_mail import Message
 from flask_login import login_user, login_required, current_user, logout_user
+from flask_mail import Message
 from sikolah import app, mail
 from sikolah.forms import LoginForm
 from sikolah.models import Siswa, Pelajaran, Nilai, User
@@ -33,14 +33,15 @@ def login():
         user = User.query.filter_by(user_name=login_form.username.data).first()
         # if user is found in databse
         if user and user.password == login_form.password.data:
-            # login
+            # login process
             login_user(
                 user=user,
                 remember=login_form.remember.data,
-                duration=datetime.timedelta(seconds=8000),
+                duration=datetime.timedelta(seconds=60),
             )
             # flash message when login success
-            flash(f"Selamat datang di sikolah, {user.user_name}!", "success")
+            flash(f"Selamat datang di sikolah, {user.data_siswa.nama}!", "success")
+            # set next page
             next_page = request.args.get("next")
 
             return redirect(next_page) if next_page else redirect(url_for("home"))
@@ -79,9 +80,10 @@ def send_message():
 @app.route("/profile")
 def profile():
     data = current_user.data_siswa
-    return render_template('user_info.html', data=data)
+    return render_template("user_info.html", data=data)
 
-@app.route("/scores", methods = ["POST", "GET"])
+
+@app.route("/scores", methods=["POST", "GET"])
 @login_required
 def scores():
     course_list = []
@@ -102,12 +104,9 @@ def scores():
     #     return selected_semester
 
     return render_template(
-    "scores.html",
-    title="Nilai Siswa",
-    data_nilai=[i[1] for i in sorted_course_list],
-    data_semester=max_semester[len(max_semester) - 1],
-    data_siswa=current_user.data_siswa, )
-    # return str(selected_semester)
-
-# @app.route('/scores/<selected_semester>', methods = ["POST", "GET"])
-# def view_scores(selected_semester):
+        "scores.html",
+        title="Nilai Siswa",
+        data_nilai=[i[1] for i in sorted_course_list],
+        data_semester=max_semester[len(max_semester) - 1],
+        data_siswa=current_user.data_siswa,
+    )

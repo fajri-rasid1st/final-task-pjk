@@ -3,7 +3,6 @@ from flask_mail import Mail
 from flask_migrate import Migrate
 from flask_login import LoginManager
 from flask_sqlalchemy import SQLAlchemy
-from flask_admin import Admin, BaseView, expose, AdminIndexView
 
 # app
 app = Flask(__name__)
@@ -26,9 +25,6 @@ db = SQLAlchemy(app)
 
 # migrate
 migrate = Migrate(app, db)
-
-# admin
-admin = Admin(app, template_mode="bootstrap4")
 
 # mail
 mail = Mail(app)

@@ -1,5 +1,7 @@
-from sikolah import db, login_manager, admin
-from flask_login import UserMixin
+from sikolah import app, db, login_manager
+from flask import url_for, redirect
+from flask_login import UserMixin, current_user
+from flask_admin import Admin, BaseView, expose, AdminIndexView
 from flask_admin.contrib.sqla import ModelView
 
 
@@ -65,6 +67,22 @@ class User(db.Model, UserMixin):
     def __asdict(self):
         return {c.name: str(getattr(self, c.name)) for c in self._table_.columns}
 
+
+class MyModelView(ModelView):
+    def is_accessible(self):
+        return current_user.is_authenticated
+
+    def inaccessible_callback(self, name, **kwargs):
+        return redirect(url_for("login"))
+
+
+class MyAdminIndexView(AdminIndexView):
+    def is_accessible(self):
+        return current_user.is_authenticated
+
+
+# admin
+admin = Admin(app, template_mode="bootstrap4", index_view=MyAdminIndexView())
 
 admin.add_view(ModelView(Siswa, db.session))
 admin.add_view(ModelView(Pelajaran, db.session))

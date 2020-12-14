@@ -30,9 +30,16 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarToggle">
                     <div class="navbar-nav mr-auto">
+                        {% if current_user.hak_akses == "admin" %}
                         <a class="nav-item nav-link" href="{{url_for('admin.index')}}">Dashboard</a>
+                        {% endif %}
+
                         <a class="nav-item nav-link" href="{{url_for('home')}}">Home</a>
-                        <a class="nav-item nav-link" href="#">Nilai</a>
+
+                        {% if current_user.hak_akses == "siswa" %}
+                        <a class="nav-item nav-link" href="{{url_for('scores')}}">Nilai</a>
+                        {% endif %}
+
                         <a class="nav-item nav-link" href="{{url_for('about')}}">About</a>
                     </div>
                     <!-- Navbar Right Side -->
@@ -41,7 +48,7 @@
                             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                                 aria-expanded="false">
                                 <span class="profile">
-                                    <p class="d-inline mb-0 mr-2">Admin</p>
+                                    <p class="d-inline mb-0 mr-2">{{ current_user.data_siswa.nama }}</p>
                                     <img src="{{url_for('static', filename='img/default.jpg')}}" alt="default.jpg"
                                         class="profile-img">
                                 </span>
@@ -54,7 +61,7 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a class="dropdown-item px-3 btn-outline-info" href="{{ url_for('logout') }}"">
+                                    <a class="dropdown-item px-3 btn-outline-info" href="{{ url_for('logout') }}">
                                         <i class=" fas fa-sign-out-alt mr-1"></i>
                                         Logout
                                     </a>
