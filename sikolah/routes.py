@@ -76,19 +76,38 @@ def send_message():
         return redirect(url_for("admin.email"))
 
 
-@app.route("/scores")
+@app.route("/profile")
+def profile():
+    data = current_user.data_siswa
+    return render_template('user_info.html', data=data)
+
+@app.route("/scores", methods = ["POST", "GET"])
 @login_required
 def scores():
     course_list = []
 
-    for i in list(User.query.get(1).data_siswa.data_nilai_siswa):
+    for i in list(current_user.data_siswa.data_nilai_siswa):
         course_list.append([i.semester, i])
 
     sorted_course_list = sorted(course_list, key=lambda index: index[0])
 
+    max_semester = [i[0] for i in sorted_course_list]
+
+    # selected_semester = []
+    # if request.method == "POST":
+    #     semester = request.form.get('select_semester')
+    #     for i in sorted_course_list:
+    #         if(i[0] == semester):
+    #             selected_semester.append(i[1])
+    #     return selected_semester
+
     return render_template(
-        "scores.html",
-        title="Nilai Siswa",
-        data_nilai=[i[1] for i in sorted_course_list],
-        data_siswa=User.query.get(1).data_siswa,
-    )
+    "scores.html",
+    title="Nilai Siswa",
+    data_nilai=[i[1] for i in sorted_course_list],
+    data_semester=max_semester[len(max_semester) - 1],
+    data_siswa=current_user.data_siswa, )
+    # return str(selected_semester)
+
+# @app.route('/scores/<selected_semester>', methods = ["POST", "GET"])
+# def view_scores(selected_semester):

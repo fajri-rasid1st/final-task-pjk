@@ -15,6 +15,10 @@ class LoginForm(FlaskForm):
     remember = BooleanField("Remember me")
     submit = SubmitField("Login")
 
+class UpdateProfileForm(FlaskForm):
+    nama = StringField('Nama', validators=[DataRequired()], render_kw={'autofocus': 'on'})
+    
+
 
 class SendAccountForm(FlaskForm):
     pass
