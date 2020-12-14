@@ -1,17 +1,30 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <h1>Flask Mail Sending App</h1>
-    <form action="{{url_for('send_message')}}" method="POST">
-        <input type="email" name="email" placeholder="Email" required id="">
-        <input type="text" name="subject" placeholder="Subject" required id="">
-        <textarea name="message" id="" cols="30" placeholder="Message Body" required rows="30"></textarea>
-        <input type="submit" value="Send Message">
-    </form>
-</body>
-</html>
+
+{% extends 'admin/index.html' %}
+
+{% block content %}
+
+<article class="media content-section">
+    <div class="media-body">
+        <h1 class="display-4 mb-4">Send Account to User</h1>
+        <form method="POST" action="">
+            {{ form.hidden_tag() }}
+            <fieldset>
+                <div class="form-group">
+                    {{ form.username.label(class="form-control-label") }}
+                    {% if form.username.errors %}
+                    {{ form.username(class="form-control form-control-lg is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.username.errors %}
+                        <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                    {% else %}
+                    {{ form.username(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+            </fieldset>
+        </form>
+    </div>
+</article>
+
+{% endblock content %}
