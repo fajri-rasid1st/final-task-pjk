@@ -74,7 +74,6 @@ def email():
     return render_template("email.html", title="Send Email", form=email_form)
 
 
-@login_required
 def send_message():
     if request.method == "POST":
         email = request.form["email"]
@@ -89,12 +88,18 @@ def send_message():
 @app.route("/scores", methods=["POST", "GET"])
 @login_required
 def scores():
+    # check role of user
+    if current_user.hak_akses != "siswa":
+        return abort(404)
+
     if request.method == "POST":
         selected_semester = request.form.get("select_semester")
+
         if selected_semester == "Pilih Semester":
             return redirect("/scores")
         else:
             return redirect(f"/scores/{selected_semester}")
+
     else:
         course_list = []
 
@@ -102,7 +107,6 @@ def scores():
             course_list.append([i.semester, i])
 
         sorted_course_list = sorted(course_list, key=lambda index: index[0])
-
         max_semester = [i[0] for i in sorted_course_list]
 
         return render_template(
@@ -115,17 +119,21 @@ def scores():
 
 
 @app.route("/scores/<int:semester>")
+@login_required
 def scores_semester(semester):
+    # check role of user
+    if current_user.hak_akses != "siswa":
+        return abort(404)
+
     course_list = []
 
     for i in list(current_user.data_siswa.data_nilai_siswa):
         course_list.append([i.semester, i])
 
     sorted_course_list = sorted(course_list, key=lambda index: index[0])
-
     max_semester = [i[0] for i in sorted_course_list]
-
     selected_semester = []
+
     for i in sorted_course_list:
         if i[0] == semester:
             selected_semester.append(i[1])
@@ -140,23 +148,30 @@ def scores_semester(semester):
 
 
 @app.route("/profile", methods=["POST", "GET"])
+@login_required
 def profile():
     data = current_user.data_siswa
-    return render_template("user_info.html", title="Profil", data=data)
+    return render_template("user_info.html", title="My Profil", data=data)
 
 
 @app.route("/profile/edit", methods=["POST", "GET"])
+@login_required
 def edit_profile():
     form = UpdateProfileForm()
+
     siswa = current_user.data_siswa
+
     if form.validate_on_submit():
         siswa.tempat_lahir = form.tempat_lahir.data
         siswa.tanggal_lahir = form.tanggal_lahir.data
         siswa.alamat = form.alamat.data
+
         db.session.commit()
+
         return redirect(url_for("account"))
     elif request.method == "GET":
         form.tempat_lahir.data = siswa.tempat_lahir
         form.tanggal_lahir.data = siswa.tanggal_lahir
         form.alamat.data = siswa.alamat
-    return "lol"
+
+    return "hello world"
