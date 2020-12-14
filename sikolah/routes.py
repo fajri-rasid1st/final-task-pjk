@@ -48,8 +48,8 @@ def send_message():
         return redirect(url_for("admin.email"))
 
 
-@app.route("/view")
-def view_nilai():
+@app.route("/nilai")
+def nilai():
     temp_list = list(User.query.get(1).data_user.data_siswa)
     sem = []
 
@@ -59,4 +59,4 @@ def view_nilai():
     sorted_sem = sorted(sem, key=lambda index: index[0])
     sorted_sem_nilai = [i[1] for i in sorted_sem]
 
-    return render_template("view_nilai.html", title="View Nilai", data=sorted_sem_nilai)
+    return render_template("nilai.html", title="Nilai Siswa", data=sorted_sem_nilai)
