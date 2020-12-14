@@ -2,7 +2,7 @@
 
 {% block content %}
 
-<article class="media content-section">
+<article class="media content-section mb-4">
     <div class="media-body">
         <h1 class="display-4 mb-4">Transkrip Nilai</h1>
         <div class="detail-siswa mb-4">
@@ -20,15 +20,15 @@
 
         <form class="form-inline" method="POST" action="{{ url_for('scores') }}">
             <div class="form-group mb-4">
-                <div class="input-group">
-                    <select name="select_semester" class=" form-control">
+                <div class="input-group mr-3">
+                    <select name="select_semester" class=" form-control custom-select">
                         <option selected>Pilih Semester</option>
                         {% for i in range(1, data_semester + 1) %}
                         <option value="{{ i }}">Semester {{ i }}</option>
                         {% endfor %}
                     </select>
                 </div>
-            <button type="submit" class="btn btn-dark">Select</button>
+                <button type="submit" class="btn btn-dark">Submit</button>
             </div>
         </form>
         <table class="table table-bordered table-striped">

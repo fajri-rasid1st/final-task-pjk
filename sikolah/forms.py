@@ -24,7 +24,6 @@ class LoginForm(FlaskForm):
 
 
 class UpdateProfileForm(FlaskForm):
-    # nama = StringField('Nama', validators=[DataRequired()], render_kw={'autofocus': 'on'})
     tempat_lahir = StringField(
         "Tempat Lahir", validators=[DataRequired()], render_kw={"autofocus": "on"}
     )
@@ -37,14 +36,3 @@ class UpdateProfileForm(FlaskForm):
 class EmailForm(FlaskForm):
     emails = SelectField("Select Email Address :", choices=[])
     submit = SubmitField("Send Email")
-
-
-class UpdateProfileForm(FlaskForm):
-    # nama = StringField('Nama', validators=[DataRequired()], render_kw={'autofocus': 'on'})
-    tempat_lahir = StringField(
-        "Tempat Lahir", validators=[DataRequired()], render_kw={"autofocus": "on"}
-    )
-    tanggal_lahir = DateField(
-        "Tanggal Lahir", validators=[DataRequired()], format="%Y-%m-%d"
-    )
-    alamat = StringField("Alamat", validators=[DataRequired()])

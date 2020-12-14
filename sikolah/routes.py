@@ -86,29 +86,6 @@ def send_message():
         return redirect(url_for("admin.email"))
 
 
-@app.route("/profile", methods=["POST", "GET"])
-def profile():
-    data = current_user.data_siswa
-    return render_template("user_info.html", title="Profil", data=data)
-
-
-@app.route("/profile/edit", methods=["POST", "GET"])
-def edit_profile():
-    form = UpdateProfileForm()
-    siswa = current_user.data_siswa
-    if form.validate_on_submit():
-        siswa.tempat_lahir = form.tempat_lahir.data
-        siswa.tanggal_lahir = form.tanggal_lahir.data
-        siswa.alamat = form.alamat.data
-        db.session.commit()
-        return redirect(url_for("account"))
-    elif request.method == "GET":
-        form.tempat_lahir.data = siswa.tempat_lahir
-        form.tanggal_lahir.data = siswa.tanggal_lahir
-        form.alamat.data = siswa.alamat
-    return "lol"
-
-
 @app.route("/scores", methods=["POST", "GET"])
 @login_required
 def scores():
@@ -163,7 +140,6 @@ def scores_semester(semester):
 
 
 @app.route("/profile", methods=["POST", "GET"])
-@login_required
 def profile():
     data = current_user.data_siswa
     return render_template("user_info.html", title="Profil", data=data)

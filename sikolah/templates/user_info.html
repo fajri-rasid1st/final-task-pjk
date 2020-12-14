@@ -2,65 +2,35 @@
 
 {% block content %}
 
-<article class="media content-section">
+<article class="media content-section mb-4">
     <div class="media-body">
         <h1 class="display-4 mb-4">Profil Mahasiswa</h1>
-        <div class="row mb-3">
-            <div class="col-lg-3">
-                Nama
-            </div>
-            <div class="col">
-                :
-            </div>
-            <div class="col-lg-8">
-                {{ data.nama }}
-            </div>
+        <table style="font-weight: 500;">
+            <tr>
+                <td>Nama</td>
+                <td>&#8192:&#8192 {{ data.nama }}</td>
+            </tr>
+            <tr>
+                <td>NIM</td>
+                <td>&#8192:&#8192 {{ data.nis }}</td>
+            </tr>
+            <tr>
+                <td>Tempat Lahir</td>
+                <td>&#8192:&#8192 {{ data.tempat_lahir }}</td>
+            </tr>
+            <tr>
+                <td>Tanggal Lahir</td>
+                <td>&#8192:&#8192 {{ data.tanggal_lahir }}</td>
+            </tr>
+            <tr>
+                <td>Alamat</td>
+                <td>&#8192:&#8192 {{ data.alamat }}</td>
+            </tr>
+        </table>
+        <div class="form-group mt-4 mb-2 d-flex justify-content-between">
+            <div></div>
+            <button type="submit" class="btn btn-dark">Edit Profile</button>
         </div>
-        <div class="row mb-3">
-            <div class="col-lg-3">
-                NIM
-            </div>
-            <div class="col">
-                :
-            </div>
-            <div class="col-lg-8">
-                {{ data.nis }}
-            </div>
-        </div>
-        <div class="row mb-3">
-            <div class="col-lg-3">
-                Tempat Lahir
-            </div>
-            <div class="col">
-                :
-            </div>
-            <div class="col-lg-8">
-                {{ data.tempat_lahir }}
-            </div>
-        </div>
-        <div class="row mb-3">
-            <div class="col-lg-3">
-                Tanggal Lahir
-            </div>
-            <div class="col">
-                :
-            </div>
-            <div class="col-lg-8">
-                {{ data.tanggal_lahir }}
-            </div>
-        </div>
-        <div class="row mb-3">
-            <div class="col-lg-3">
-                Alamat
-            </div>
-            <div class="col">
-                :
-            </div>
-            <div class="col-lg-8">
-                {{ data.alamat }}
-            </div>
-        </div>
-        <button type="submit" class="btn btn-dark">Edit</button>
     </div>
 </article>
 
