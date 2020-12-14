@@ -25,6 +25,7 @@
 	{% endwith %}
 	<main class="form-signin">
 		<form method="POST" action="">
+			{{ form.csrf_token }}
 			{{ form.hidden_tag() }}
 			<fieldset>
 				<i class="fas fa-school fa-5x text-dark mb-2"></i>

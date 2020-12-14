@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, BooleanField, SelectField
-from wtforms.validators import DataRequired, ValidationError
+from wtforms.validators import DataRequired, ValidationError, Email
 
 
 class LoginForm(FlaskForm):
@@ -16,9 +16,10 @@ class LoginForm(FlaskForm):
     submit = SubmitField("Login")
 
 
-class UpdateProfileForm(FlaskForm):
-    pass
+class EmailForm(FlaskForm):
+    emails = SelectField("Select Email Address :", choices=[])
+    submit = SubmitField("Send Email")
 
 
-class SendAccountForm(FlaskForm):
+class UpdateForm(FlaskForm):
     pass

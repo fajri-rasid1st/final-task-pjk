@@ -14,8 +14,9 @@ label {
 
 input[type="text"],
 input[type="password"],
+select,
 textarea#content {
-	border: 2px solid #bbbbbb;
+	border: 2px solid #bbbbbb !important;
 }
 
 .sidebar {
@@ -66,7 +67,7 @@ textarea#content {
 	top: 20px;
 	left: 540px;
 	position: absolute;
-	opacity: 0.5;
+	opacity: 0.2;
 	z-index: -99;
 }
 

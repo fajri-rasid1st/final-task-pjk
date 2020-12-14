@@ -1,8 +1,8 @@
-from sikolah import app, db, login_manager
-from flask import url_for, redirect
+from flask import url_for, redirect, abort
 from flask_login import UserMixin, current_user
 from flask_admin import Admin, BaseView, expose, AdminIndexView
 from flask_admin.contrib.sqla import ModelView
+from sikolah import app, db, login_manager
 
 
 @login_manager.user_loader
@@ -76,7 +76,7 @@ class MyModelView(ModelView):
         return current_user.is_authenticated
 
     def inaccessible_callback(self, name, **kwargs):
-        return redirect(url_for("login"))
+        return abort(404)
 
 
 class MyAdminIndexView(AdminIndexView):
@@ -87,7 +87,7 @@ class MyAdminIndexView(AdminIndexView):
         return current_user.is_authenticated
 
     def inaccessible_callback(self, name, **kwargs):
-        return redirect(url_for("login"))
+        return abort(404)
 
 
 # admin

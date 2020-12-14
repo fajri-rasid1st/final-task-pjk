@@ -1,8 +1,8 @@
-from flask import render_template, url_for, flash, redirect, request
+from flask import render_template, url_for, flash, redirect, request, abort
 from flask_mail import Message
 from flask_login import login_user, login_required, current_user, logout_user
 from sikolah import app, mail
-from sikolah.forms import LoginForm
+from sikolah.forms import LoginForm, EmailForm
 from sikolah.models import Siswa, Pelajaran, Nilai, User
 import datetime
 
@@ -37,7 +37,7 @@ def login():
             login_user(
                 user=user,
                 remember=login_form.remember.data,
-                duration=datetime.timedelta(seconds=8000),
+                duration=datetime.timedelta(seconds=600),
             )
             # flash message when login success
             flash(f"Selamat datang di sikolah, {user.data_siswa.nama}!", "success")
@@ -61,10 +61,19 @@ def logout():
 @app.route("/email")
 @login_required
 def email():
-    return render_template("email.html", title="Send Email")
+    # check role of user
+    if current_user.hak_akses != "admin":
+        return abort(404)
+
+    email_form = EmailForm()
+
+    email_form.emails.choices = [
+        (siswa.email) for siswa in Siswa.query.all() if siswa.email != "admin"
+    ]
+
+    return render_template("email.html", title="Send Email", form=email_form)
 
 
-@app.route("/send_message", methods=["POST", "GET"])
 @login_required
 def send_message():
     if request.method == "POST":
