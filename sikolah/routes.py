@@ -4,10 +4,8 @@ from flask_login import login_user, login_required, current_user, logout_user
 from sikolah import app, mail, db
 from sikolah.forms import LoginForm, EmailForm, UpdateProfileForm
 from sikolah.models import Siswa, Pelajaran, Nilai, User
-from PIL import Image
+from sikolah.utilities import save_picture, send_message
 import datetime
-import secrets
-import os
 
 
 @app.route("/")
@@ -82,33 +80,6 @@ def email():
         flash("Pengiriman email sedang dalam proses.", "info")
 
     return render_template("email.html", title="Send Email", form=email_form)
-
-
-def send_message(user):
-    message = Message(
-        subject="[Account User | Sikolah]",
-        sender="lee.jadon.k@gmail.com",
-        recipients=[user.data_siswa.email],
-    )
-    message.html = f"""
-        <h1> Halo, {user.data_siswa.nama}. </h1>
-        <p> Berikut adalah username dan password "Sikolah" anda: </p>
-        <table style="font-weight: 500;">
-            <tr>
-                <td>Username/Email</td>
-                <td> : {user.user_name}</td>
-            </tr>
-            <tr>
-                <td>Password</td>
-                <td> : {user.password}</td>
-            </tr>
-        </table>
-        <br />
-        <p> Harap agar menjaga password anda agar tetap aman! </p>
-    """
-    mail.send(message)
-
-    return redirect(url_for("email"))
 
 
 @app.route("/scores", methods=["GET", "POST"])
@@ -196,7 +167,6 @@ def profile():
         current_user.data_siswa.email = update_profil_form.email.data
 
         db.session.commit()
-
         flash("Berhasil mengedit profile.", "success")
 
         return redirect(url_for("profile"))
@@ -222,21 +192,3 @@ def profile():
         form=update_profil_form,
         gambar=file_gambar,
     )
-
-
-def save_picture(form_pict):
-    # generate random string
-    rand_hex = secrets.token_hex(8)
-    # split name of file and extension
-    _, file_ext = os.path.splitext(form_pict.filename)
-    # create new file name
-    file_name = rand_hex + file_ext
-    # path where file will be saved
-    file_path = os.path.join(current_app.root_path, "static/img", file_name)
-    # resize the image
-    img = Image.open(form_pict)
-    img.thumbnail((250, 250))
-    # save picture
-    img.save(file_path)
-    # return picture name
-    return file_name
