@@ -8,7 +8,9 @@ from wtforms import (
     SelectField,
     DateField,
 )
-from wtforms.validators import DataRequired, ValidationError, Email
+from wtforms.validators import DataRequired, ValidationError, Email, Length, EqualTo
+from flask_login import current_user
+from sikolah.models import User
 
 
 class LoginForm(FlaskForm):
@@ -45,3 +47,36 @@ class UpdateProfileForm(FlaskForm):
 class EmailForm(FlaskForm):
     emails = SelectField("Pilih Alamat Email User :", choices=[])
     submit = SubmitField("Kirim Email")
+
+
+class ChangePassForm(FlaskForm):
+    password = PasswordField(
+        "Password",
+        validators=[DataRequired()],
+    )
+    new_password = PasswordField(
+        "Password Baru", validators=[DataRequired(), Length(min=5, max=128)]
+    )
+    password_confirm = PasswordField(
+        "Konfirmasi Password Baru",
+        validators=[DataRequired(), Length(min=5, max=128), EqualTo("new_password")],
+    )
+    submit = SubmitField("Ganti")
+
+    def validate_password(self, password):
+        user = User.query.filter_by(password=password.data).first()
+
+        if not user:
+            raise ValidationError("Password salah.")
+
+
+class RequestResetForm(FlaskForm):
+    email = StringField(
+        "",
+        validators=[DataRequired(), Email()],
+        render_kw={
+            "placeholder": "Email",
+            "autofocus": "on",
+        },
+    )
+    submit = SubmitField("Send Password")

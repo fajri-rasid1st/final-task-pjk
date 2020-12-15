@@ -100,8 +100,9 @@ textarea#content {
 	border: 2px solid #dc3545 !important;
 }
 
-.bg-dark {
-	background-color: #343a40;
+.bg-dark,
+.btn-dark {
+	background-color: #343a40 !important;
 }
 
 @supports ((position: -webkit-sticky) or (position: sticky)) {

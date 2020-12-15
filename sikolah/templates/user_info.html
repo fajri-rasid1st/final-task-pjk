@@ -35,10 +35,12 @@
             </tr>
         </table>
         <!-- Button trigger modal -->
-        <div class="form-group mt-4 mb-2 d-flex justify-content-between">
-            <div></div>
-            <button type="submit" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#editprofile">
-                Edit Profile
+        <div class="form-group mt-4 mb-2 d-flex justify-content-end">
+            <button type="button" class="btn btn-dark ml-3" data-bs-toggle="modal" data-bs-target="#editprofile">
+                Ganti Password
+            </button>
+            <button type="button" class="btn btn-dark ml-3" data-bs-toggle="modal" data-bs-target="#editprofile">
+                Edit Profil
             </button>
         </div>
         <!-- Modal -->
@@ -139,11 +141,11 @@
                                 {% endif %}
                             </div>
                             <div class="modal-footer px-0 d-flex justify-content-between">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kembali</button>
                                 {{ form.submit(class="btn btn-info") }}
                             </div>
+                        </form>
                     </div>
-                    </form>
                 </div>
             </div>
         </div>

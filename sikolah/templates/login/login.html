@@ -1,0 +1,61 @@
+{% extends 'login/layout.html' %}
+
+{% block content %}
+
+<main class="form-signin">
+	<form method="POST" action="">
+		{{ form.hidden_tag() }}
+		<fieldset>
+			<i class="fas fa-school fa-5x text-dark mb-2"></i>
+			<h1 class="title mb-4">Sikolah</h1>
+			<div class="form-group text-left mb-2">
+				{{ form.username.label(class="form-control-label mb-1") }}
+				{% if form.username.errors %}
+				{{ form.username(class="form-control form-control-lg is-invalid mb-0") }}
+				<div class="invalid-feedback mb-0">
+					{% for error in form.username.errors %}
+					<span>{{ error }}</span>
+					{% endfor %}
+				</div>
+				{% else %}
+				{{ form.username(class="form-control form-control-lg mb-0") }}
+				{% endif %}
+			</div>
+			<div class="form-group text-left mb-4">
+				{{ form.password.label(class="form-control-label mb-1") }}
+				{% if form.password.errors %}
+				{{ form.password(class="form-control form-control-lg is-invalid mb-0") }}
+				<div class="invalid-feedback mb-0">
+					{% for error in form.password.errors %}
+					<span>{{ error }}</span>
+					{% endfor %}
+				</div>
+				{% else %}
+				{{ form.password(class="form-control form-control-lg mb-0") }}
+				{% endif %}
+			</div>
+			<div class="form-group d-flex justify-content-between mb-1">
+				<small class="form-check d-flex align-items-center justify-content-between">
+					{{ form.remember(class="form-check-input remember") }}
+					{{ form.remember.label(class="form-check-label") }}
+				</small>
+				<div class="form-group">
+					<small class="text-muted ml-2">
+						<a href="{{ url_for('reset_request') }}">Forgot Password?</a>
+					</small>
+				</div>
+			</div>
+			<div class="form-group mb-2">
+				{{ form.submit(class="w-100 mt-2 mb-1 btn btn-lg btn-outline-dark")}}
+			</div>
+		</fieldset>
+	</form>
+	<div>
+		<small class="text-muted">
+			Jika anda belum mempunyai akun, silahkan hubungi admin Sikolah.
+		</small>
+	</div>
+	<p class="text-muted mt-2">&copy; 2020-2021</p>
+</main>
+
+{% endblock content %}

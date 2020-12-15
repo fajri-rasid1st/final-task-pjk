@@ -2,12 +2,18 @@ from flask import render_template, url_for, flash, redirect, request, abort, cur
 from flask_mail import Message
 from flask_login import login_user, login_required, current_user, logout_user
 from sikolah import app, mail, db
-from sikolah.forms import LoginForm, EmailForm, UpdateProfileForm
+from sikolah.forms import (
+    LoginForm,
+    EmailForm,
+    UpdateProfileForm,
+    ChangePassForm,
+    RequestResetForm,
+)
 from sikolah.models import Siswa, Pelajaran, Nilai, User
 from sikolah.utilities import save_picture, send_message
 import datetime
 
-
+# route for home/main
 @app.route("/")
 @app.route("/home")
 @login_required
@@ -16,6 +22,7 @@ def home():
     return render_template("home.html", title="Home", gambar=file_gambar)
 
 
+# route for about
 @app.route("/about")
 @login_required
 def about():
@@ -23,6 +30,7 @@ def about():
     return render_template("about.html", title="About", gambar=file_gambar)
 
 
+# route for log in
 @app.route("/login", methods=["GET", "POST"])
 def login():
     # check if user is already log in
@@ -52,15 +60,17 @@ def login():
             # flash message when login failed
             flash(f"Username atau password salah.", "error")
 
-    return render_template("login.html", title="Login", form=login_form)
+    return render_template("login/login.html", title="Login", form=login_form)
 
 
+# route for log out
 @app.route("/logout")
 def logout():
     logout_user()
     return redirect(url_for("login"))
 
 
+# route for send email to user
 @app.route("/admin/email", methods=["GET", "POST"])
 @login_required
 def email():
@@ -82,6 +92,7 @@ def email():
     return render_template("email.html", title="Send Email", form=email_form)
 
 
+# route for see details scores
 @app.route("/scores", methods=["GET", "POST"])
 @login_required
 def scores():
@@ -118,6 +129,7 @@ def scores():
         )
 
 
+# route for see details of scores per semester
 @app.route("/scores/<int:semester>")
 @login_required
 def scores_semester(semester):
@@ -149,6 +161,7 @@ def scores_semester(semester):
     )
 
 
+# route for see profile
 @app.route("/profile", methods=["GET", "POST"])
 @login_required
 def profile():
@@ -191,4 +204,52 @@ def profile():
         data=current_user.data_siswa,
         form=update_profil_form,
         gambar=file_gambar,
+    )
+
+
+# route for change password
+@app.route("/change_password", methods=["GET", "POST"])
+@login_required
+def change_password():
+    change_pass_form = ChangePassForm()
+
+    if change_pass_form.validate_on_submit():
+        # reset new password from user
+        current_user.password = change_pass_form.new_password.data
+        # commit to database
+        db.session.commit()
+        # make a flash message when registration successfully
+        send_message(current_user)
+        flash("Berhasil mengubah password.", "success")
+
+        return redirect(url_for("change_password"))
+
+    file_gambar = url_for("static", filename=f"img/{current_user.data_siswa.gambar}")
+
+    return render_template(
+        "reset_password.html",
+        title="Reset Password",
+        form=change_pass_form,
+        gambar=file_gambar,
+    )
+
+
+@app.route("/request_reset", methods=["GET", "POST"])
+def reset_request():
+    form = RequestResetForm()
+
+    if current_user.is_authenticated:
+        return redirect(url_for("home"))
+
+    if form.validate_on_submit():
+        user = User.query.filter_by(user_name=form.email.data).first()
+        if user:
+            send_message(user)
+            flash("Password telah terkirim ke email anda.", "info")
+            return redirect("login")
+        else:
+            flash("Username atau email tidak terdaftar.", "error")
+
+    return render_template(
+        "login/reset_request.html", title="Forgot Password", form=form
     )

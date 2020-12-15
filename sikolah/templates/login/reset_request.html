@@ -1,0 +1,36 @@
+{% extends 'login/layout.html' %}
+
+{% block content %}
+
+<main class="form-signin">
+    <div class="content-section mb-5">
+        <form action="" method="POST">
+            {{ form.hidden_tag() }}
+            <i class="fas fa-school fa-5x text-dark mb-2"></i>
+            <h1 class="title mb-4">Sikolah</h1>
+
+            <legend>Request Password</legend>
+
+            <div class="form-group text-left border-bottom mb-1">
+                {% if form.email.errors %}
+                {{ form.email(class="form-control form-control-lg is-invalid req-pass") }}
+                <div class="invalid-feedback">
+                    {% for error in form.email.errors %}
+                    <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
+                {% else %}
+                {{ form.email(class="form-control form-control-lg") }}
+                {% endif %}
+            </div>
+
+            <small>*Masukkan email yang telah terdaftar</small>
+
+            <div class="form-group mt-3">
+                {{ form.submit(class="btn btn-dark") }}
+            </div>
+        </form>
+    </div>
+</main>
+
+{% endblock content %}

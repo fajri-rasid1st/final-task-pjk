@@ -26,8 +26,9 @@ textarea#content {
 	border: 2px solid #bbbbbb !important;
 }
 
-.bg-dark {
-	background-color: #343a40;
+.bg-dark,
+.btn-dark {
+	background-color: #343a40 !important;
 }
 
 .navbar-brand {
@@ -127,7 +128,8 @@ a.article-title:hover {
 	background-color: #f0f5f9 !important;
 }
 
-input[type="text"].form-control.form-control-lg.is-invalid {
+input[type="text"].form-control.form-control-lg.is-invalid,
+input[type="password"].form-control.form-control-lg.is-invalid {
 	border: 2px solid #dc3545 !important;
 }
 

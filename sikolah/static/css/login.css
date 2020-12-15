@@ -68,6 +68,11 @@ body {
 	font-weight: 500;
 }
 
+.bg-dark,
+.btn-dark {
+	background-color: #343a40 !important;
+}
+
 .form-control-label {
 	font-weight: 500;
 }
