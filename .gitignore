@@ -92,7 +92,7 @@ $RECYCLE.BIN/
 *.msp
 *.lnk
 sikolah/static/node_modules/
-migrations/*
+migrations/
 .vscode/*
 !.vscode/tasks.json
 !.vscode/launch.json

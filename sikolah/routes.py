@@ -1,4 +1,4 @@
-from flask import render_template, url_for, flash, redirect, request, abort
+from flask import render_template, url_for, flash, redirect, request, abort, current_app
 from flask_mail import Message
 from flask_login import login_user, login_required, current_user, logout_user
 from sikolah import app, mail, db
@@ -14,13 +14,15 @@ import os
 @app.route("/home")
 @login_required
 def home():
-    return render_template("home.html", title="Home")
+    file_gambar = url_for("static", filename=f"img/{current_user.data_siswa.gambar}")
+    return render_template("home.html", title="Home", gambar=file_gambar)
 
 
 @app.route("/about")
 @login_required
 def about():
-    return render_template("about.html", title="About")
+    file_gambar = url_for("static", filename=f"img/{current_user.data_siswa.gambar}")
+    return render_template("about.html", title="About", gambar=file_gambar)
 
 
 @app.route("/login", methods=["GET", "POST"])
@@ -109,12 +111,14 @@ def send_message(user):
     return redirect(url_for("email"))
 
 
-@app.route("/scores", methods=["POST", "GET"])
+@app.route("/scores", methods=["GET", "POST"])
 @login_required
 def scores():
     # check role of user
     if current_user.hak_akses != "siswa":
         return abort(404)
+
+    file_gambar = url_for("static", filename=f"img/{current_user.data_siswa.gambar}")
 
     if request.method == "POST":
         selected_semester = request.form.get("select_semester")
@@ -139,6 +143,7 @@ def scores():
             data_nilai=[i[1] for i in sorted_course_list],
             data_semester=max_semester[len(max_semester) - 1],
             data_siswa=current_user.data_siswa,
+            gambar=file_gambar,
         )
 
 
@@ -149,6 +154,7 @@ def scores_semester(semester):
     if current_user.hak_akses != "siswa":
         return abort(404)
 
+    file_gambar = url_for("static", filename=f"img/{current_user.data_siswa.gambar}")
     course_list = []
 
     for i in list(current_user.data_siswa.data_nilai_siswa):
@@ -168,55 +174,69 @@ def scores_semester(semester):
         data_nilai=selected_semester,
         data_semester=max_semester[len(max_semester) - 1],
         data_siswa=current_user.data_siswa,
+        gambar=file_gambar,
     )
 
 
-@app.route("/profile", methods=["POST", "GET"])
+@app.route("/profile", methods=["GET", "POST"])
 @login_required
 def profile():
     update_profil_form = UpdateProfileForm()
 
-    siswa = current_user.data_siswa
+    if update_profil_form.validate_on_submit():
+        if update_profil_form.gambar.data:
+            simpan_gambar = save_picture(update_profil_form.gambar.data)
+            current_user.data_siswa.gambar = simpan_gambar
 
-    file_gambar = url_for("static", filename="img/" + siswa.gambar)
+        current_user.data_siswa.nama = update_profil_form.nama.data
+        current_user.data_siswa.nis = update_profil_form.nis.data
+        current_user.data_siswa.tempat_lahir = update_profil_form.tempat_lahir.data
+        current_user.data_siswa.tanggal_lahir = update_profil_form.tanggal_lahir.data
+        current_user.data_siswa.alamat = update_profil_form.alamat.data
+        current_user.data_siswa.email = update_profil_form.email.data
 
-    if request.method == "POST":
-        if update_profil_form.validate_on_submit():
-            if update_profil_form.gambar.data:
-                simpan_gambar = save_picture(update_profil_form.gambar.data)
-                siswa.gambar = simpan_gambar
-            siswa.tempat_lahir = update_profil_form.tempat_lahir.data
-            siswa.tanggal_lahir = update_profil_form.tanggal_lahir.data
-            siswa.alamat = update_profil_form.alamat.data
+        db.session.commit()
 
-            db.session.commit()
-            flash("Berhasil edit akun!", "success")
+        flash("Berhasil mengedit profile.", "success")
 
-            return redirect(url_for("profile"))
+        return redirect(url_for("profile"))
 
-        elif request.method == "GET":
-            update_profil_form.tempat_lahir.data = siswa.tempat_lahir
-            form.tanggal_lahir.data = siswa.tanggal_lahir
-            form.alamat.data = siswa.alamat
-            form.gambar.data = siswa.gambar
+    elif request.method == "GET":
+        update_profil_form.nama.data = current_user.data_siswa.nama
+        update_profil_form.nis.data = current_user.data_siswa.nis
+        update_profil_form.tempat_lahir.data = current_user.data_siswa.tempat_lahir
+        update_profil_form.tanggal_lahir.data = current_user.data_siswa.tanggal_lahir
+        update_profil_form.alamat.data = current_user.data_siswa.alamat
+        update_profil_form.email.data = current_user.data_siswa.email
+        update_profil_form.gambar.data = current_user.data_siswa.gambar
 
-        return render_template(
-            "user_info.html",
-            title="Profil",
-            data=siswa,
-            form=update_profil_form,
-            gambar=file_gambar,
-        )
+    else:
+        flash("Gagal mengedit profile.", "error")
+
+    file_gambar = url_for("static", filename=f"img/{current_user.data_siswa.gambar}")
+
+    return render_template(
+        "user_info.html",
+        title="Profil",
+        data=current_user.data_siswa,
+        form=update_profil_form,
+        gambar=file_gambar,
+    )
 
 
-def save_picture(form_picture):
-    random_hex = secrets.token_hex(8)
-    _, f_ext = os.path.splitext(form_picture.filename)
-    picture_fn = random_hex + f_ext
-    picture_path = os.path.join(app.root_path, "static/img", picture_fn)
-    output_size = (125, 125)
-    i = Image.open(form_picture)
-    i.thumbnail(output_size)
-    i.save(picture_path)
-
-    return picture_fn
+def save_picture(form_pict):
+    # generate random string
+    rand_hex = secrets.token_hex(8)
+    # split name of file and extension
+    _, file_ext = os.path.splitext(form_pict.filename)
+    # create new file name
+    file_name = rand_hex + file_ext
+    # path where file will be saved
+    file_path = os.path.join(current_app.root_path, "static/img", file_name)
+    # resize the image
+    img = Image.open(form_pict)
+    img.thumbnail((250, 250))
+    # save picture
+    img.save(file_path)
+    # return picture name
+    return file_name

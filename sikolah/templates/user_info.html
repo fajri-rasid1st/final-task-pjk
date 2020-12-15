@@ -5,9 +5,11 @@
 <article class="media content-section mb-5">
     <div class="media-body">
         <h1 class="display-4 mb-4">Profil Mahasiswa</h1>
-        <img class="rounded-circle account-img" src="{{ gambar }}">
-        <table style="font-weight: 500;">
-            <tr>
+        <div class="profile-picture-display text-center">
+            <img src="{{ gambar }}" class="shadow rounded-circle account-img mb-4">
+        </div>
+        <table class="table-profil">
+            <tr class="pb-5">
                 <td>Nama</td>
                 <td>&#8192:&#8192 {{ data.nama }}</td>
             </tr>
@@ -32,82 +34,114 @@
                 <td>&#8192:&#8192 {{ data.email }}</td>
             </tr>
         </table>
-        <!-- <button type="submit" class="btn btn-dark">Edit</button> -->
         <!-- Button trigger modal -->
         <div class="form-group mt-4 mb-2 d-flex justify-content-between">
             <div></div>
-            <button type="submit" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+            <button type="submit" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#editprofile">
                 Edit Profile
             </button>
         </div>
         <!-- Modal -->
-        <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-            aria-labelledby="staticBackdropLabel" aria-hidden="true">
-            <div class="modal-dialog">
+        <div class="modal fade" id="editprofile" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="staticBackdropLabel">Edit Profil</h5>
+                        <legend class="modal-title">Edit Profil</legend>
                     </div>
-                    <div class="modal-body">
+                    <div class="modal-body px-5">
                         <form method="POST" action="" enctype="multipart/form-data">
                             {{ form.hidden_tag() }}
-                            <fieldset class="form-group">
-                                <legend class="border-bottom mb-4">Account Info</legend>
-                                <div class="form-group">
-                                    {{ form.tempat_lahir.label(class="form-control-label") }}
-                                    {% if form.tempat_lahir.errors %}
-                                    {{ form.tempat_lahir(class="form-control form-control-lg is-invalid") }}
-                                    <div class="invalid-feedback">
-                                        {% for error in form.tempat_lahir.errors %}
-                                        <span>{{ error }}</span>
-                                        {% endfor %}
-                                    </div>
-                                    {% else %}
-                                    {{ form.tempat_lahir(class="form-control form-control-lg") }}
-                                    {% endif %}
-                                </div>
-                                <div class="form-group">
-                                    {{ form.tanggal_lahir.label(class="form-control-label") }}
-                                    {% if form.tanggal_lahir.errors %}
-                                    {{ form.tanggal_lahir(class="form-control form-control-lg is-invalid") }}
-                                    <div class="invalid-feedback">
-                                        {% for error in form.tanggal_lahir.errors %}
-                                        <span>{{ error }}</span>
-                                        {% endfor %}
-                                    </div>
-                                    {% else %}
-                                    {{ form.tanggal_lahir(class="form-control form-control-lg") }}
-                                    {% endif %}
-                                </div>
-                                <div class="form-group">
-                                    {{ form.alamat.label(class="form-control-label") }}
-                                    {% if form.alamat.errors %}
-                                    {{ form.alamat(class="form-control form-control-lg is-invalid") }}
-                                    <div class="invalid-feedback">
-                                        {% for error in form.alamat.errors %}
-                                        <span>{{ error }}</span>
-                                        {% endfor %}
-                                    </div>
-                                    {% else %}
-                                    {{ form.alamat(class="form-control form-control-lg") }}
-                                    {% endif %}
-                                </div>
-                                <div class="form-group">
-                                    {{ form.gambar.label() }}
-                                    {{ form.gambar(class="form-control-file") }}
-                                    {% if form.gambar.errors %}
-                                    {% for error in form.gambar.errors %}
-                                    <span class="text-danger">{{ error }}</span></br>
+                            <div class="form-group text-left mb-3">
+                                {{ form.nama.label(class="form-control-label mb-1") }}
+                                {% if form.nama.errors %}
+                                {{ form.nama(class="form-control form-control-lg is-invalid") }}
+                                <div class="invalid-feedback">
+                                    {% for error in form.nama.errors %}
+                                    <span>{{ error }}</span>
                                     {% endfor %}
-                                    {% endif %}
                                 </div>
-                            </fieldset>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                        <div>
-                            {{ form.submit(class="btn btn-outline-info") }}
-                        </div>
+                                {% else %}
+                                {{ form.nama(class="form-control form-control-lg") }}
+                                {% endif %}
+                            </div>
+                            <div class="form-group text-left mb-3">
+                                {{ form.nis.label(class="form-control-label mb-1") }}
+                                {% if form.nis.errors %}
+                                {{ form.nis(class="form-control form-control-lg is-invalid") }}
+                                <div class="invalid-feedback">
+                                    {% for error in form.nis.errors %}
+                                    <span>{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                                {% else %}
+                                {{ form.nis(class="form-control form-control-lg") }}
+                                {% endif %}
+                            </div>
+                            <div class="form-group text-left mb-3">
+                                {{ form.tempat_lahir.label(class="form-control-label mb-1") }}
+                                {% if form.tempat_lahir.errors %}
+                                {{ form.tempat_lahir(class="form-control form-control-lg is-invalid") }}
+                                <div class="invalid-feedback">
+                                    {% for error in form.tempat_lahir.errors %}
+                                    <span>{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                                {% else %}
+                                {{ form.tempat_lahir(class="form-control form-control-lg") }}
+                                {% endif %}
+                            </div>
+                            <div class="form-group text-left mb-3">
+                                {{ form.tanggal_lahir.label(class="form-control-label mb-1") }}
+                                {% if form.tanggal_lahir.errors %}
+                                {{ form.tanggal_lahir(class="form-control form-control-lg is-invalid") }}
+                                <div class="invalid-feedback">
+                                    {% for error in form.tanggal_lahir.errors %}
+                                    <span>{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                                {% else %}
+                                {{ form.tanggal_lahir(class="form-control form-control-lg") }}
+                                {% endif %}
+                            </div>
+                            <div class="form-group text-left mb-3">
+                                {{ form.alamat.label(class="form-control-label mb-1") }}
+                                {% if form.alamat.errors %}
+                                {{ form.alamat(class="form-control form-control-lg is-invalid") }}
+                                <div class="invalid-feedback">
+                                    {% for error in form.alamat.errors %}
+                                    <span>{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                                {% else %}
+                                {{ form.alamat(class="form-control form-control-lg") }}
+                                {% endif %}
+                            </div>
+                            <div class="form-group text-left mb-3">
+                                {{ form.email.label(class="form-control-label mb-1") }}
+                                {% if form.email.errors %}
+                                {{ form.email(class="form-control form-control-lg is-invalid") }}
+                                <div class="invalid-feedback">
+                                    {% for error in form.email.errors %}
+                                    <span>{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                                {% else %}
+                                {{ form.email(class="form-control form-control-lg") }}
+                                {% endif %}
+                            </div>
+                            <div class="form-group text-left mb-3">
+                                {{ form.gambar.label() }}
+                                {{ form.gambar(class="form-control-file") }}
+                                {% if form.gambar.errors %}
+                                {% for error in form.gambar.errors %}
+                                <span class="text-danger d-block mt-2">{{ error }}</span>
+                                {% endfor %}
+                                {% endif %}
+                            </div>
+                            <div class="modal-footer px-0 d-flex justify-content-between">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                                {{ form.submit(class="btn btn-info") }}
+                            </div>
                     </div>
                     </form>
                 </div>

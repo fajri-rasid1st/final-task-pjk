@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE html>	
 <html lang="en">
 
 <head>
@@ -24,10 +24,6 @@
 					<i class="fas fa-school"></i>
 					Sikolah
 				</a>
-				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle"
-					aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
-					<span class="navbar-toggler-icon"></span>
-				</button>
 				<div class="collapse navbar-collapse" id="navbarToggle">
 					<div class="navbar-nav mr-auto">
 						<a class="nav-item nav-link" href="{{url_for('home')}}">Home</a>
@@ -39,13 +35,12 @@
 					<!-- Navbar Right Side -->
 					<div class="navbar-nav">
 						<li class="nav-item dropdown bg-dark">
-							<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-								aria-expanded="false">
+							<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
 								<span class="profile">
 									<p class="d-inline mb-0 mr-2">
 										{{ current_user.data_siswa.nama }}
 									</p>
-									<img src="static/img/{{ current_user.data_siswa.gambar }}" class="profile-img" />
+									<img src="{{ gambar }}" class="profile-img" />
 								</span>
 							</a>
 							<ul class="dropdown-menu dropdown-menu-right dropdown-menu-dark">
@@ -81,11 +76,14 @@
 		<div class="row">
 			<!-- main content section -->
 			<div class="col-md-8">
-				{% with messages = get_flashed_messages(with_categories=True) %} {% if
-				messages %} {% for category, message in messages %}
+				{% with messages = get_flashed_messages(with_categories=True) %}
+				{% if messages %}
+				{% for category, message in messages %}
 				<div class="flash-data" data-flash="{{ message }}" data-category="{{ category }}"></div>
-				{% endfor %} {% endif %} {% endwith %} {% block content %} {% endblock
-				content %}
+				{% endfor %}
+				{% endif %}
+				{% endwith %}
+				{% block content %} {% endblock content %}
 			</div>
 			<!-- side content section-->
 			<div class="col-md-4">
@@ -121,10 +119,10 @@
 		</div>
 	</main>
 </body>
+<script src="{{url_for('static', filename='js/jquery-3.5.1.js')}}"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
 	integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"
 	crossorigin="anonymous"></script>
-<script src="{{url_for('static', filename='js/jquery-3.5.1.js')}}"></script>
 <script src="{{url_for('static', filename='js/sweetalert2.all.min.js')}}"></script>
 <script src="{{url_for('static', filename='js/script.js')}}"></script>
 

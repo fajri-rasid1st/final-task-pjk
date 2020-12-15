@@ -13,9 +13,9 @@ from wtforms.validators import DataRequired, ValidationError, Email
 
 class LoginForm(FlaskForm):
     username = StringField(
-        "Username or Email",
+        "Username atau Email",
         validators=[DataRequired()],
-        render_kw={"placeholder": "Username", "autofocus": "on"},
+        render_kw={"placeholder": "Username atau Email", "autofocus": "on"},
     )
     password = PasswordField(
         "Password", validators=[DataRequired()], render_kw={"placeholder": "Password"}
@@ -25,17 +25,23 @@ class LoginForm(FlaskForm):
 
 
 class UpdateProfileForm(FlaskForm):
-    tempat_lahir = StringField(
-        "Tempat Lahir", validators=[DataRequired()], render_kw={"autofocus": "on"}
+    nama = StringField(
+        "Nama", validators=[DataRequired()], render_kw={"autofocus": "on"}
     )
+    nis = StringField("NIM", validators=[DataRequired()], render_kw={"readonly": "on"})
+    tempat_lahir = StringField("Tempat Lahir", validators=[DataRequired()])
     tanggal_lahir = DateField(
-        "Tanggal Lahir", validators=[DataRequired()], format="%Y-%m-%d"
+        "Tanggal Lahir",
+        validators=[DataRequired()],
+        render_kw={"placeholder": "format : yyyy-mm-dd"},
+        format="%Y-%m-%d",
     )
     alamat = StringField("Alamat", validators=[DataRequired()])
+    email = StringField("Email", validators=[DataRequired(), Email()])
     gambar = FileField("Foto Profil", validators=[FileAllowed(["jpg", "png", "jpeg"])])
     submit = SubmitField("Edit Profil")
 
 
 class EmailForm(FlaskForm):
-    emails = SelectField("Select Email Address :", choices=[])
-    submit = SubmitField("Send Email")
+    emails = SelectField("Pilih Alamat Email User :", choices=[])
+    submit = SubmitField("Kirim Email")

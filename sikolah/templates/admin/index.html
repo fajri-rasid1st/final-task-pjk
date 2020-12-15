@@ -24,27 +24,18 @@
                     <i class="fas fa-school"></i>
                     Sikolah
                 </a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle"
-                    aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
                 <div class="collapse navbar-collapse" id="navbarToggle">
                     <div class="navbar-nav mr-auto">
                         <a class="nav-item nav-link" href="{{url_for('home')}}">Home</a>
-                        {% if current_user.hak_akses == "siswa" %}
-                        <a class="nav-item nav-link" href="{{url_for('scores')}}">Nilai</a>
-                        {% endif %}
                         <a class="nav-item nav-link" href="{{url_for('about')}}">About</a>
                     </div>
                     <!-- Navbar Right Side -->
                     <div class="navbar-nav">
                         <li class="nav-item dropdown bg-dark">
-                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-                                aria-expanded="false">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
                                 <span class="profile">
                                     <p class="d-inline mb-0 mr-2">{{ current_user.data_siswa.nama }}</p>
-                                    <img src="{{url_for('static', filename='img/default.jpg')}}" alt="default.jpg"
-                                        class="profile-img">
+                                    <img src="{{url_for('static', filename='img/default.jpg')}}" class="profile-img">
                                 </span>
                             </a>
                             <ul class="dropdown-menu dropdown-menu-right dropdown-menu-dark">
@@ -114,14 +105,14 @@
                 </div>
             </nav>
             <!-- main content section -->
+            {% with messages = get_flashed_messages(with_categories=True) %}
+            {% if messages %}
+            {% for category, message in messages %}
+            <div class="flash-data" data-flash="{{ message }}" data-category="{{ category }}"></div>
+            {% endfor %}
+            {% endif %}
+            {% endwith %}
             <div class="col-md-2">
-                {% with messages = get_flashed_messages(with_categories=True) %}
-                {% if messages %}
-                {% for category, message in messages %}
-                <div class="flash-data" data-flash="{{ message }}" data-category="{{ category }}"></div>
-                {% endfor %}
-                {% endif %}
-                {% endwith %}
                 <div class="admin-content text-center">
                     <i class="fas fa-users-cog admin"></i>
                     <h1 class="display-4">Administrator</h1>
@@ -132,12 +123,12 @@
             </div>
         </div>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"
-        crossorigin="anonymous"></script>
-    <script src="{{url_for('static', filename='js/jquery-3.5.1.js')}}"></script>
-    <script src="{{url_for('static', filename='js/sweetalert2.all.min.js')}}"></script>
-    <script src="{{url_for('static', filename='js/script.js')}}"></script>
 </body>
+<script src="{{url_for('static', filename='js/jquery-3.5.1.js')}}"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"
+    crossorigin="anonymous"></script>
+<script src="{{url_for('static', filename='js/sweetalert2.all.min.js')}}"></script>
+<script src="{{url_for('static', filename='js/script.js')}}"></script>
 
 </html>

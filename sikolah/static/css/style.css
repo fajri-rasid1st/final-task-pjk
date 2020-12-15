@@ -87,18 +87,12 @@ a.article-title:hover {
 	vertical-align: middle;
 }
 
-.account-img,
-.account-info-img {
+.account-img {
 	height: 125px;
 	width: 125px;
 	margin-right: 20px;
 	margin-bottom: 16px;
 	border: 4px solid whitesmoke;
-}
-
-.account-info-img {
-	margin-right: 0px;
-	margin-bottom: 10px;
 }
 
 .account-heading {
@@ -121,4 +115,23 @@ a.article-title:hover {
 
 .dev:hover {
 	text-decoration: none;
+}
+
+.table-profil {
+	font-weight: 500;
+	border-collapse: separate;
+	border-spacing: 0 0.4em;
+}
+
+.modal-content {
+	background-color: #f0f5f9 !important;
+}
+
+input[type="text"].form-control.form-control-lg.is-invalid {
+	border: 2px solid #dc3545 !important;
+}
+
+input[type="file"] {
+	width: 1vw;
+	cursor: pointer;
 }

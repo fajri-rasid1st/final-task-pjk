@@ -12,7 +12,7 @@
 	<!-- External CSS -->
 	<link rel="stylesheet" href="{{url_for('static', filename='css/login.css')}}" />
 	<!-- title -->
-	<title>{{ title}} | Sikolah</title>
+	<title>{{ title }} | Sikolah</title>
 </head>
 
 <body class="text-center">
@@ -25,7 +25,6 @@
 	{% endwith %}
 	<main class="form-signin">
 		<form method="POST" action="">
-			{{ form.csrf_token }}
 			{{ form.hidden_tag() }}
 			<fieldset>
 				<i class="fas fa-school fa-5x text-dark mb-2"></i>
@@ -73,16 +72,16 @@
 		<div>
 			<small class="text-muted">
 				Jika anda belum mempunyai akun, silahkan hubungi admin dengan cara
-				<a href="{{ url_for('login') }}" class="ml-1">klick di sini.</a>
+				<a href="{{ url_for('login') }}">klick di sini.</a>
 			</small>
 		</div>
 		<p class="text-muted mt-2">&copy; 2020-2021</p>
 	</main>
 </body>
+<script src="{{url_for('static', filename='js/jquery-3.5.1.js')}}"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
 	integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"
 	crossorigin="anonymous"></script>
-<script src="{{url_for('static', filename='js/jquery-3.5.1.js')}}"></script>
 <script src="{{url_for('static', filename='js/sweetalert2.all.min.js')}}"></script>
 <script src="{{url_for('static', filename='js/script.js')}}"></script>
 
