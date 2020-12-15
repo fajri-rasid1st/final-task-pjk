@@ -54,7 +54,7 @@ def login():
             flash(f"Selamat datang di sikolah, {user.data_siswa.nama}.", "success")
             # determine next page if exist
             next_page = request.args.get("next")
-
+            # redirect to next page if exist else home
             return redirect(next_page) if next_page else redirect(url_for("home"))
         else:
             # flash message when login failed
@@ -219,7 +219,6 @@ def change_password():
         # commit to database
         db.session.commit()
         # make a flash message when registration successfully
-        send_message(current_user)
         flash("Berhasil mengubah password.", "success")
 
         return redirect(url_for("change_password"))
@@ -234,22 +233,24 @@ def change_password():
     )
 
 
-@app.route("/request_reset", methods=["GET", "POST"])
-def reset_request():
-    form = RequestResetForm()
-
+@app.route("/forget_password", methods=["GET", "POST"])
+def forget_password():
     if current_user.is_authenticated:
         return redirect(url_for("home"))
 
-    if form.validate_on_submit():
-        user = User.query.filter_by(user_name=form.email.data).first()
+    form_forget_pass = RequestResetForm()
+
+    if form_forget_pass.validate_on_submit():
+        user = User.query.filter_by(user_name=form_forget_pass.email.data).first()
+
         if user:
             send_message(user)
             flash("Password telah terkirim ke email anda.", "info")
+
             return redirect("login")
         else:
             flash("Username atau email tidak terdaftar.", "error")
 
     return render_template(
-        "login/reset_request.html", title="Forgot Password", form=form
+        "login/forget_password.html", title="Forgot Password", form=form_forget_pass
     )

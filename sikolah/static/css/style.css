@@ -26,6 +26,16 @@ textarea#content {
 	border: 2px solid #bbbbbb !important;
 }
 
+input[type="text"].form-control.form-control-lg.is-invalid,
+input[type="password"].form-control.form-control-lg.is-invalid {
+	border: 2px solid #dc3545 !important;
+}
+
+input[type="file"] {
+	width: 1vw;
+	cursor: pointer;
+}
+
 .bg-dark,
 .btn-dark {
 	background-color: #343a40 !important;
@@ -126,14 +136,4 @@ a.article-title:hover {
 
 .modal-content {
 	background-color: #f0f5f9 !important;
-}
-
-input[type="text"].form-control.form-control-lg.is-invalid,
-input[type="password"].form-control.form-control-lg.is-invalid {
-	border: 2px solid #dc3545 !important;
-}
-
-input[type="file"] {
-	width: 1vw;
-	cursor: pointer;
 }
