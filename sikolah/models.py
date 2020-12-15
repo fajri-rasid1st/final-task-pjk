@@ -94,6 +94,7 @@ class MyAdminIndexView(AdminIndexView):
 # admin
 admin = Admin(app, template_mode="bootstrap4", index_view=MyAdminIndexView())
 
+# add view
 admin.add_view(MyModelView(Siswa, db.session))
 admin.add_view(MyModelView(Pelajaran, db.session))
 admin.add_view(MyModelView(Nilai, db.session))
