@@ -28,7 +28,9 @@ class UpdateProfileForm(FlaskForm):
     tempat_lahir = StringField(
         "Tempat Lahir", validators=[DataRequired()], render_kw={"autofocus": "on"}
     )
-    tanggal_lahir = DateField("Tanggal Lahir", validators=[DataRequired()], format="%Y-%m-%d")
+    tanggal_lahir = DateField(
+        "Tanggal Lahir", validators=[DataRequired()], format="%Y-%m-%d"
+    )
     alamat = StringField("Alamat", validators=[DataRequired()])
 
     gambar = FileField('Foto Profil', validators=[FileAllowed(['jpg', 'png', 'jpeg'])])

@@ -43,7 +43,7 @@ def login():
                 duration=datetime.timedelta(seconds=600),
             )
             # flash message when login success
-            flash(f"Selamat datang di sikolah, {user.data_siswa.nama}!", "success")
+            flash(f"Selamat datang di sikolah, {user.data_siswa.nama}.", "success")
             # determine next page if exist
             next_page = request.args.get("next")
 
@@ -71,21 +71,35 @@ def email():
     email_form = EmailForm()
 
     email_form.emails.choices = [
-        (siswa.email) for siswa in Siswa.query.all() if siswa.email != "admin"
+        (siswa.email) for siswa in Siswa.query.all() if siswa.nama.lower() != "admin"
     ]
+
+    if email_form.validate_on_submit():
+        user = User.query.filter_by(user_name=email_form.emails.data).first()
+        send_message(user)
+        flash("Pengiriman email berhasil.", "info")
 
     return render_template("email.html", title="Send Email", form=email_form)
 
 
-def send_message():
-    if request.method == "POST":
-        email = request.form["email"]
-        msg = f"Username dan Password anda adalah {email}, {request.form['message']}"
-        subject = request.form["subject"]
-        message = Message(subject, sender="lee.jadon.k@gmail.com", recipients=[email])
-        message.body = msg
-        mail.send(message)
-        return redirect(url_for("admin.email"))
+def send_message(user):
+    message = Message(
+        subject="[Password Reset Request | Cicks Blog]",
+        sender="lee.jadon.k@gmail.com",
+        recipients=[user.data_siswa.email],
+    )
+    message.html = f"""
+        <h1> Halo, {user.data_siswa.nama}. </h1>
+        <p> Berikut adalah username dan password "Sikolah" anda: </p>
+        <br />
+        <p> Username/Email : {user.user_name} </p>
+        <p> Password : {user.password} </p>
+        <br />
+        <small> Harap agar menjaga password anda agar tetap aman! </small>
+    """
+    mail.send(message)
+
+    return redirect(url_for("admin/email"))
 
 
 @app.route("/scores", methods=["POST", "GET"])
@@ -99,9 +113,9 @@ def scores():
         selected_semester = request.form.get("select_semester")
 
         if selected_semester == "Pilih Semester":
-            return redirect("/scores")
+            return redirect("scores")
         else:
-            return redirect(f"/scores/{selected_semester}")
+            return redirect(f"scores/{selected_semester}")
 
     else:
         course_list = []
@@ -178,8 +192,11 @@ def profile():
             siswa.alamat = form.alamat.data
             
             db.session.commit()
-            flash('Berhasil edit akun!', 'success')
-            return redirect(url_for('profile'))
+
+            flash("Berhasil edit akun!", "success")
+
+            return redirect(url_for("profile"))
+
     elif request.method == "GET":
         form.tempat_lahir.data = siswa.tempat_lahir
         form.tanggal_lahir.data = siswa.tanggal_lahir

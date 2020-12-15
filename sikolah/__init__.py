@@ -15,10 +15,10 @@ app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 # app mail config
 app.config["MAIL_SERVER"] = "smtp.gmail.com"
 app.config["MAIL_PORT"] = 465
-app.config["MAIL_USERNAME"] = "lee.jadon.k@gmail.com"
-app.config["MAIL_PASSWORD"] = "fwcydwxzbpsmeoqn"
 app.config["MAIL_USE_TLS"] = False
 app.config["MAIL_USE_SSL"] = True
+app.config["MAIL_USERNAME"] = "lee.jadon.k@gmail.com"
+app.config["MAIL_PASSWORD"] = "fwcydwxzbpsmeoqn"
 
 # db
 db = SQLAlchemy(app)
@@ -38,5 +38,3 @@ from sikolah.errors.handlers import errors
 
 # register blue print
 app.register_blueprint(errors)
-
-
