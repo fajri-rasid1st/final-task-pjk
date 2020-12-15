@@ -3,11 +3,16 @@ from flask_login import UserMixin, current_user
 from flask_admin import Admin, BaseView, expose, AdminIndexView
 from flask_admin.contrib.sqla import ModelView
 from sikolah import app, db, login_manager
+import secrets
 
 
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(int(user_id))
+
+
+def generate_password():
+    return secrets.token_hex(8)
 
 
 class Siswa(db.Model):
@@ -58,7 +63,7 @@ class Nilai(db.Model):
 class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True, nullable=False)
     user_name = db.Column(db.String(50), unique=True, nullable=False)
-    password = db.Column(db.String(128), nullable=False)
+    password = db.Column(db.String(128), nullable=False, default=generate_password())
     hak_akses = db.Column(db.String(10), nullable=False)
     id_siswa = db.Column(db.Integer, db.ForeignKey("siswa.id"))
 
