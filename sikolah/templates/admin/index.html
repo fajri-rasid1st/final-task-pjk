@@ -47,24 +47,22 @@
                                         class="profile-img">
                                 </span>
                             </a>
-                            <ul class="dropdown-menu dropdown-menu-dark">
+                            <ul class="dropdown-menu dropdown-menu-right dropdown-menu-dark">
                                 <li>
-                                    <a class="dropdown-item px-3 btn-outline-info" href="#">
+                                    <a class="dropdown-item px-3 btn-outline-info" href="{{ url_for('profile') }}">
                                         <i class="fas fa-user mr-1"></i>
                                         Profil
                                     </a>
                                 </li>
-                                {% if current_user.hak_akses == "admin" %}
                                 <li>
                                     <a class="dropdown-item px-3 btn-outline-info" href="{{url_for('admin.index')}}">
                                         <i class="fas fa-columns mr-1"></i>
                                         Dashboard
                                     </a>
                                 </li>
-                                {% endif %}
                                 <li>
                                     <a class="dropdown-item px-3 btn-outline-info" href="{{ url_for('logout') }}">
-                                        <i class=" fas fa-sign-out-alt mr-1"></i>
+                                        <i class="fas fa-sign-out-alt mr-1"></i>
                                         Logout
                                     </a>
                                 </li>

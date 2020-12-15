@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -42,9 +42,10 @@
 							<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
 								aria-expanded="false">
 								<span class="profile">
-									<p class="d-inline mb-0 mr-2">{{ current_user.data_siswa.nama }}</p>
-									<img src="{{url_for('static', filename='img/default.jpg')}}" alt="default.jpg"
-										class="profile-img">
+									<p class="d-inline mb-0 mr-2">
+										{{ current_user.data_siswa.nama }}
+									</p>
+									<img src="static/img/{{ current_user.data_siswa.gambar }}" class="profile-img" />
 								</span>
 							</a>
 							<ul class="dropdown-menu dropdown-menu-right dropdown-menu-dark">
@@ -80,14 +81,11 @@
 		<div class="row">
 			<!-- main content section -->
 			<div class="col-md-8">
-				{% with messages = get_flashed_messages(with_categories=True) %}
-				{% if messages %}
-				{% for category, message in messages %}
+				{% with messages = get_flashed_messages(with_categories=True) %} {% if
+				messages %} {% for category, message in messages %}
 				<div class="flash-data" data-flash="{{ message }}" data-category="{{ category }}"></div>
-				{% endfor %}
-				{% endif %}
-				{% endwith %}
-				{% block content %} {% endblock content %}
+				{% endfor %} {% endif %} {% endwith %} {% block content %} {% endblock
+				content %}
 			</div>
 			<!-- side content section-->
 			<div class="col-md-4">
@@ -98,8 +96,9 @@
 					</h3>
 					<div class="stories mb-4 text-center">
 						<p class="mb-0">
-							“Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque magnam perferendis iure
-							sequi dolores quae explicabo est, itaque placeat architecto?”
+							“Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque
+							magnam perferendis iure sequi dolores quae explicabo est, itaque
+							placeat architecto?”
 						</p>
 						<small>- Kepala Sekolah</small>
 					</div>

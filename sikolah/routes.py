@@ -4,7 +4,10 @@ from flask_login import login_user, login_required, current_user, logout_user
 from sikolah import app, mail, db
 from sikolah.forms import LoginForm, EmailForm, UpdateProfileForm
 from sikolah.models import Siswa, Pelajaran, Nilai, User
+from PIL import Image
 import datetime
+import secrets
+import os
 
 
 @app.route("/")
@@ -58,7 +61,7 @@ def logout():
     return redirect(url_for("login"))
 
 
-@app.route("/admin/email")
+@app.route("/admin/email", methods=["GET", "POST"])
 @login_required
 def email():
     # check role of user
@@ -74,29 +77,36 @@ def email():
     if email_form.validate_on_submit():
         user = User.query.filter_by(user_name=email_form.emails.data).first()
         send_message(user)
-        flash("Pengiriman email berhasil.", "info")
+        flash("Pengiriman email sedang dalam proses.", "info")
 
     return render_template("email.html", title="Send Email", form=email_form)
 
 
 def send_message(user):
     message = Message(
-        subject="[Password Reset Request | Cicks Blog]",
+        subject="[Account User | Sikolah]",
         sender="lee.jadon.k@gmail.com",
         recipients=[user.data_siswa.email],
     )
     message.html = f"""
         <h1> Halo, {user.data_siswa.nama}. </h1>
         <p> Berikut adalah username dan password "Sikolah" anda: </p>
+        <table style="font-weight: 500;">
+            <tr>
+                <td>Username/Email</td>
+                <td> : {user.user_name}</td>
+            </tr>
+            <tr>
+                <td>Password</td>
+                <td> : {user.password}</td>
+            </tr>
+        </table>
         <br />
-        <p> Username/Email : {user.user_name} </p>
-        <p> Password : {user.password} </p>
-        <br />
-        <small> Harap agar menjaga password anda agar tetap aman! </small>
+        <p> Harap agar menjaga password anda agar tetap aman! </p>
     """
     mail.send(message)
 
-    return redirect(url_for("admin/email"))
+    return redirect(url_for("email"))
 
 
 @app.route("/scores", methods=["POST", "GET"])
@@ -168,23 +178,45 @@ def profile():
 
     siswa = current_user.data_siswa
 
+    file_gambar = url_for("static", filename="img/" + siswa.gambar)
+
     if request.method == "POST":
         if update_profil_form.validate_on_submit():
+            if update_profil_form.gambar.data:
+                simpan_gambar = save_picture(update_profil_form.gambar.data)
+                siswa.gambar = simpan_gambar
             siswa.tempat_lahir = update_profil_form.tempat_lahir.data
             siswa.tanggal_lahir = update_profil_form.tanggal_lahir.data
             siswa.alamat = update_profil_form.alamat.data
 
             db.session.commit()
-
             flash("Berhasil edit akun!", "success")
 
             return redirect(url_for("profile"))
 
-    elif request.method == "GET":
-        update_profil_form.tempat_lahir.data = siswa.tempat_lahir
-        update_profil_form.tanggal_lahir.data = siswa.tanggal_lahir
-        update_profil_form.alamat.data = siswa.alamat
+        elif request.method == "GET":
+            update_profil_form.tempat_lahir.data = siswa.tempat_lahir
+            form.tanggal_lahir.data = siswa.tanggal_lahir
+            form.alamat.data = siswa.alamat
+            form.gambar.data = siswa.gambar
 
         return render_template(
-            "user_info.html", title="Profil", data=siswa, form=update_profil_form
+            "user_info.html",
+            title="Profil",
+            data=siswa,
+            form=update_profil_form,
+            gambar=file_gambar,
         )
+
+
+def save_picture(form_picture):
+    random_hex = secrets.token_hex(8)
+    _, f_ext = os.path.splitext(form_picture.filename)
+    picture_fn = random_hex + f_ext
+    picture_path = os.path.join(app.root_path, "static/img", picture_fn)
+    output_size = (125, 125)
+    i = Image.open(form_picture)
+    i.thumbnail(output_size)
+    i.save(picture_path)
+
+    return picture_fn

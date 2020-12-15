@@ -1,4 +1,5 @@
 from flask_wtf import FlaskForm
+from flask_wtf.file import FileField, FileAllowed
 from wtforms import (
     StringField,
     PasswordField,
@@ -31,6 +32,7 @@ class UpdateProfileForm(FlaskForm):
         "Tanggal Lahir", validators=[DataRequired()], format="%Y-%m-%d"
     )
     alamat = StringField("Alamat", validators=[DataRequired()])
+    gambar = FileField("Foto Profil", validators=[FileAllowed(["jpg", "png", "jpeg"])])
     submit = SubmitField("Edit Profil")
 
 
