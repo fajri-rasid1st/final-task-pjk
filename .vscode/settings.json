@@ -1,0 +1,71 @@
+{
+	"workbench.colorTheme": "One Dark Pro",
+	"workbench.iconTheme": "material-icon-theme",
+	"vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue",
+	"prettier.tabWidth": 4,
+	"prettier.useTabs": true,
+	"bracket-pair-colorizer-2.showHorizontalScopeLine": false,
+	"bracket-pair-colorizer-2.showBracketsInGutter": true,
+	"bracket-pair-colorizer-2.showBracketsInRuler": true,
+	"editor.fontSize": 15,
+	"editor.tabSize": 4,
+	"editor.fontFamily": "'Fira Code', monospace",
+	"editor.fontLigatures": true,
+	"editor.lineHeight": 23,
+	"editor.formatOnSave": true,
+	"editor.formatOnType": true,
+	"editor.suggestSelection": "first",
+	"editor.quickSuggestions": {
+		"other": true,
+		"comments": false,
+		"strings": true
+	},
+	"files.autoSave": "afterDelay",
+	"files.exclude": {
+		"**/.classpath": true,
+		"**/.project": true,
+		"**/.settings": true,
+		"**/.factorypath": true
+	},
+	"explorer.openEditors.visible": 0,
+	"explorer.confirmDragAndDrop": false,
+	"java.semanticHighlighting.enabled": true,
+	"java.refactor.renameFromFileExplorer": "autoApply",
+	"python.formatting.provider": "black",
+	"python.languageServer": "Microsoft",
+	"[dart]": {
+		"editor.tabSize": 2,
+		"editor.formatOnSave": true,
+		"editor.formatOnType": true,
+		"editor.rulers": [],
+		"editor.selectionHighlight": false,
+		"editor.suggest.snippetsPreventQuickSuggestions": false,
+		"editor.suggestSelection": "first",
+		"editor.tabCompletion": "onlySnippets",
+		"editor.wordBasedSuggestions": false
+	},
+	"[jsonc]": {
+		"editor.defaultFormatter": "esbenp.prettier-vscode"
+	},
+	"[json]": {
+		"editor.defaultFormatter": "esbenp.prettier-vscode"
+	},
+	"[html]": {
+		"editor.defaultFormatter": "vscode.html-language-features"
+	},
+	"[css]": {
+		"editor.defaultFormatter": "esbenp.prettier-vscode"
+	},
+	"[javascript]": {
+		"editor.defaultFormatter": "esbenp.prettier-vscode"
+	},
+	"css.lint.emptyRules": "ignore",
+	"php.validate.executablePath": "C:/xampp/php/php.exe",
+	"liveServer.settings.donotShowInfoMsg": true,
+	"liveServer.settings.donotVerifyTags": true,
+	"emmet.includeLanguages": {
+		"javascript": "html"
+	},
+	"dart.checkForSdkUpdates": false,
+	"python.pythonPath": "venv\\Scripts\\python.exe"
+}
